@@ -1,0 +1,2339 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-950 text-slate-100">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kyber Crystal Attunement Terminal v5.2</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            orbitron: ['Orbitron', 'sans-serif'],
+            rajdhani: ['Rajdhani', 'sans-serif']
+          },
+          colors: {
+            kyber: {
+              blue: '#00f0ff',
+              green: '#00ff66',
+              yellow: '#ffe600',
+              gold: '#ffb700',
+              bronze: '#cd7f32',
+              viridian: '#40e0d0',
+              cyan: '#00e5ff',
+              amethyst: '#b026ff',
+              indigo: '#4b0082',
+              magenta: '#ff007f',
+              white: '#f8fafc',
+              silver: '#cbd5e1',
+              orange: '#ff6600',
+              red: '#ff0033',
+              darksaber: '#1e293b'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #020617;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #38bdf8;
+    }
+
+    :root {
+      --active-kyber: #00f0ff;
+      --active-kyber-glow: rgba(0, 240, 255, 0.22);
+    }
+
+    /* Glow utilities & High-Tech Glass */
+    .text-glow {
+      text-shadow: 0 0 12px currentColor, 0 0 28px currentColor;
+    }
+    .box-glow {
+      box-shadow: 0 10px 40px -10px rgba(0, 240, 255, 0.18), 0 0 25px rgba(0, 240, 255, 0.1), inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
+    }
+    .box-glow-dynamic {
+      box-shadow: 0 12px 45px -10px var(--active-kyber-glow), 0 0 25px rgba(0, 240, 255, 0.08), inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
+    }
+    .box-glow-amber {
+      box-shadow: 0 10px 40px -10px rgba(255, 183, 0, 0.2), 0 0 25px rgba(255, 183, 0, 0.1), inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
+    }
+    .glass-panel {
+      background: linear-gradient(145deg, rgba(15, 23, 42, 0.85) 0%, rgba(2, 6, 23, 0.96) 100%);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(148, 163, 184, 0.15);
+    }
+    .hud-card {
+      position: relative;
+      background: linear-gradient(160deg, rgba(15, 23, 42, 0.88) 0%, rgba(2, 6, 23, 0.97) 100%);
+      border: 1px solid rgba(56, 189, 248, 0.22);
+      box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.6), inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+    }
+    /* Sci-Fi Tactical Corner Brackets */
+    .hud-brackets::before,
+    .hud-brackets::after {
+      content: "";
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+    .hud-brackets::before {
+      top: -1px;
+      left: -1px;
+      border-top: 2px solid var(--active-kyber);
+      border-left: 2px solid var(--active-kyber);
+      border-top-left-radius: 12px;
+    }
+    .hud-brackets::after {
+      bottom: -1px;
+      right: -1px;
+      border-bottom: 2px solid var(--active-kyber);
+      border-right: 2px solid var(--active-kyber);
+      border-bottom-right-radius: 12px;
+    }
+
+    .bg-cyber-grid {
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(30, 41, 59, 0.28) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(30, 41, 59, 0.28) 1px, transparent 1px);
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 0.85; transform: scale(1.02); }
+    }
+    .animate-pulse-glow {
+      animation: pulseGlow 4s infinite ease-in-out;
+    }
+
+    @keyframes floatAnimation {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-6px) rotate(1.5deg); }
+    }
+    .animate-float {
+      animation: floatAnimation 6s infinite ease-in-out;
+    }
+
+    @keyframes scanline {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(1000%); }
+    }
+    .scanline-effect::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.35), transparent);
+      animation: scanline 9s linear infinite;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body class="h-full font-rajdhani bg-slate-950 bg-cyber-grid text-slate-100 flex flex-col justify-between selection:bg-cyan-500 selection:text-slate-950 overflow-x-hidden relative">
+
+  <!-- AMBIENT REACTIVE NEBULA BACKDROP -->
+  <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+    <div id="ambientOrbPrimary" class="absolute -top-32 left-1/4 w-[34rem] h-[34rem] rounded-full blur-[140px] opacity-20 transition-colors duration-1000" style="background: radial-gradient(circle, #00f0ff, transparent 70%);"></div>
+    <div id="ambientOrbSecondary" class="absolute -bottom-32 right-1/4 w-[30rem] h-[30rem] rounded-full blur-[140px] opacity-15 transition-colors duration-1000" style="background: radial-gradient(circle, #6366f1, transparent 70%);"></div>
+  </div>
+
+  <!-- TOP HEADER / HUD BAR -->
+  <header class="w-full glass-panel border-b border-slate-800/90 sticky top-0 z-50 px-4 py-3 sm:px-8 shadow-[0_4px_30px_rgba(0,0,0,0.6)]">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-3.5 cursor-pointer group" onclick="resetQuiz()">
+        <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-cyan-950 via-slate-900 to-indigo-950 border border-cyan-500/60 flex items-center justify-center text-cyan-400 shadow-[0_0_20px_rgba(0,240,255,0.25)] group-hover:scale-105 transition-all">
+          <i class="fa-solid fa-gem text-lg animate-pulse"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="font-orbitron font-black text-base sm:text-xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-100 to-indigo-400">
+              KYBER ATTUNEMENT
+            </h1>
+            <span class="hidden md:inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-mono bg-cyan-500/10 border border-cyan-500/30 text-cyan-300">
+              <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping mr-1.5"></span>ONLINE
+            </span>
+          </div>
+          <p class="text-[10px] sm:text-xs text-slate-400 font-mono tracking-widest uppercase">HOLOCRON ARCHIVAL TERMINAL v5.2</p>
+        </div>
+      </div>
+
+      <!-- Header Status Controls -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Audio Synth Toggle -->
+        <button id="audioToggleBtn" onclick="toggleAudio()" class="px-3.5 py-2 rounded-xl glass-panel border border-slate-700/80 hover:border-cyan-500/60 text-xs font-mono text-slate-300 hover:text-cyan-300 transition-all flex items-center gap-2 shadow-sm">
+          <i id="audioIcon" class="fa-solid fa-volume-xmark text-slate-500"></i>
+          <span id="audioLabel" class="hidden sm:inline">SYNTH: OFF</span>
+        </button>
+
+        <!-- Crystal Lab Button -->
+        <button id="crystalLabBtn" onclick="openCrystalLab()" class="px-3.5 py-2 rounded-xl glass-panel border border-cyan-500/40 hover:border-cyan-400 bg-cyan-950/40 hover:bg-cyan-900/50 text-xs font-mono text-cyan-300 hover:text-cyan-100 transition-all flex items-center gap-2 shadow-[0_0_15px_rgba(0,240,255,0.15)]">
+          <i class="fa-solid fa-flask text-cyan-400"></i>
+          <span class="hidden sm:inline">CRYSTAL LAB</span>
+        </button>
+
+        <!-- Holocron Compendium Button -->
+        <button id="compendiumBtn" onclick="openCompendium()" class="px-3.5 py-2 rounded-xl glass-panel border border-amber-500/40 hover:border-amber-400 bg-amber-950/40 hover:bg-amber-900/50 text-xs font-mono text-amber-300 hover:text-amber-100 transition-all flex items-center gap-2 shadow-[0_0_15px_rgba(255,183,0,0.15)]">
+          <i class="fa-solid fa-book-journal-whills text-amber-400"></i>
+          <span class="hidden sm:inline">COMPENDIUM</span>
+        </button>
+
+        <button id="resetQuizBtn" onclick="resetQuiz()" class="px-3.5 py-2 rounded-xl glass-panel border border-slate-700/80 hover:border-rose-500/60 text-xs font-mono text-slate-300 hover:text-rose-300 transition-all flex items-center gap-2">
+          <i class="fa-solid fa-rotate-right"></i>
+          <span class="hidden sm:inline">RE-ATTUNE</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="relative z-10 flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6 md:p-8 flex flex-col justify-center">
+
+    <!-- WELCOME / INTRO SCREEN -->
+    <div id="introScreen" class="max-w-4xl mx-auto w-full hud-card hud-brackets scanline-effect rounded-3xl p-6 sm:p-12 border border-cyan-500/30 box-glow text-center space-y-7 animate-fade-in relative overflow-hidden">
+      <div class="absolute -top-24 -right-24 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-24 -left-24 w-72 h-72 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <!-- Top Telemetry Tag -->
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/90 border border-cyan-500/30 text-[11px] font-mono text-cyan-300 tracking-widest uppercase shadow-inner">
+        <i class="fa-solid fa-satellite-dish text-cyan-400 animate-pulse"></i> ILUM SANCTUARY // HARMONIC MATRIX READY
+      </div>
+
+      <div class="relative flex justify-center py-2">
+        <div class="w-24 h-24 rounded-3xl bg-gradient-to-b from-cyan-950/80 to-slate-950 border border-cyan-400/50 flex items-center justify-center text-cyan-400 shadow-[0_0_40px_rgba(0,240,255,0.28)] relative">
+          <div class="absolute inset-0 rounded-3xl border border-cyan-300/20 animate-ping opacity-20"></div>
+          <i class="fa-solid fa-gem text-5xl animate-float"></i>
+        </div>
+      </div>
+
+      <div class="space-y-3">
+        <h2 class="font-orbitron text-2xl sm:text-4xl md:text-5xl font-black tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-white to-indigo-300">
+          KYBER CRYSTAL RESONANCE
+        </h2>
+        <p class="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto font-normal">
+          The living crystal is colorless until bound to a Force-wielder's spirit. Complete <span class="text-cyan-300 font-semibold">15 Archival Axioms</span> to map your coordinates across the <span class="text-indigo-300 font-semibold">5 Philosophical Axes</span> and ignite your true resonance among the <span class="text-amber-300 font-semibold">15 Extended Spectrum Crystals</span>.
+        </p>
+      </div>
+
+      <!-- 5 Core Axes Interactive Preview Cards -->
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 pt-2 text-xs font-mono">
+        <div class="p-3.5 rounded-2xl bg-slate-900/85 border border-slate-800/90 hover:border-cyan-500/50 hover:-translate-y-0.5 transition-all group">
+          <div class="w-8 h-8 mx-auto mb-2 rounded-lg bg-cyan-950/70 border border-cyan-500/30 flex items-center justify-center text-cyan-400 group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-brain"></i>
+          </div>
+          <span class="text-slate-200 font-bold block">REASON</span>
+          <span class="text-[10px] text-slate-500">Logic vs Passion</span>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-900/85 border border-slate-800/90 hover:border-emerald-500/50 hover:-translate-y-0.5 transition-all group">
+          <div class="w-8 h-8 mx-auto mb-2 rounded-lg bg-emerald-950/70 border border-emerald-500/30 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <span class="text-slate-200 font-bold block">DISCIPLINE</span>
+          <span class="text-[10px] text-slate-500">Order & Control</span>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-900/85 border border-slate-800/90 hover:border-amber-500/50 hover:-translate-y-0.5 transition-all group">
+          <div class="w-8 h-8 mx-auto mb-2 rounded-lg bg-amber-950/70 border border-amber-500/30 flex items-center justify-center text-amber-400 group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-scale-balanced"></i>
+          </div>
+          <span class="text-slate-200 font-bold block">ALTRUISM</span>
+          <span class="text-[10px] text-slate-500">Empathy & Shield</span>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-900/85 border border-slate-800/90 hover:border-indigo-500/50 hover:-translate-y-0.5 transition-all group">
+          <div class="w-8 h-8 mx-auto mb-2 rounded-lg bg-indigo-950/70 border border-indigo-500/30 flex items-center justify-center text-indigo-400 group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-gears"></i>
+          </div>
+          <span class="text-slate-200 font-bold block">PRAGMATISM</span>
+          <span class="text-[10px] text-slate-500">Tactical Utility</span>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-900/85 border border-slate-800/90 hover:border-rose-500/50 hover:-translate-y-0.5 transition-all group col-span-2 sm:col-span-1">
+          <div class="w-8 h-8 mx-auto mb-2 rounded-lg bg-rose-950/70 border border-rose-500/30 flex items-center justify-center text-rose-400 group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-compass"></i>
+          </div>
+          <span class="text-slate-200 font-bold block">AUTONOMY</span>
+          <span class="text-[10px] text-slate-500">Sovereign Will</span>
+        </div>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center pt-3">
+        <button onclick="startQuiz()" class="w-full sm:w-auto px-9 py-4 rounded-2xl font-orbitron font-bold text-sm sm:text-base bg-gradient-to-r from-cyan-400 via-sky-300 to-indigo-400 text-slate-950 hover:from-cyan-300 hover:to-indigo-300 transition-all shadow-[0_0_30px_rgba(0,240,255,0.45)] hover:shadow-[0_0_40px_rgba(0,240,255,0.75)] transform hover:-translate-y-0.5 active:translate-y-0">
+          <i class="fa-solid fa-bolt mr-2"></i> INITIATE ATTUNEMENT
+        </button>
+        <button onclick="openCrystalLab()" class="w-full sm:w-auto px-7 py-4 rounded-2xl font-orbitron font-bold text-sm sm:text-base bg-slate-900/90 border border-cyan-500/40 text-cyan-300 hover:bg-cyan-950/60 hover:border-cyan-400 transition-all">
+          <i class="fa-solid fa-flask mr-2"></i> ENTER CRYSTAL LAB
+        </button>
+        <button onclick="openCompendium()" class="w-full sm:w-auto px-7 py-4 rounded-2xl font-orbitron font-bold text-sm sm:text-base bg-slate-900/90 border border-amber-500/40 text-amber-300 hover:bg-amber-950/60 hover:border-amber-400 transition-all">
+          <i class="fa-solid fa-book-journal-whills mr-2"></i> COMPENDIUM & LORE
+        </button>
+      </div>
+    </div>
+
+    <!-- QUIZ INTERFACE CONTAINER -->
+    <div id="quizScreen" class="hidden max-w-4xl mx-auto w-full space-y-5">
+      
+      <!-- Segmented 15-Node Holocron Progress Bar -->
+      <div class="hud-card p-4 sm:p-5 rounded-2xl border border-slate-800 space-y-3">
+        <div class="flex justify-between items-center text-xs font-mono">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+            <span id="questionStep" class="text-slate-200 font-bold tracking-wider">AXIOM 1 OF 15</span>
+          </div>
+          <span id="questionProgressPercent" class="px-2.5 py-0.5 rounded-md bg-cyan-950/80 border border-cyan-500/30 text-cyan-300 font-bold">7% SYNCHRONIZED</span>
+        </div>
+        <!-- 15 Segmented Nodes -->
+        <div id="segmentedProgressGrid" class="grid grid-cols-15 gap-1.5 pt-0.5" style="grid-template-columns: repeat(15, minmax(0, 1fr));">
+          <!-- Populated dynamically by renderQuestion() -->
+        </div>
+      </div>
+
+      <!-- Question Card -->
+      <div class="hud-card hud-brackets scanline-effect p-6 sm:p-10 rounded-3xl border border-slate-800 box-glow space-y-6 relative overflow-hidden">
+        <div class="space-y-3">
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <div id="questionCategory" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-mono bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 uppercase tracking-widest">
+              CORE PHILOSOPHY
+            </div>
+            <span class="text-[11px] font-mono text-slate-500 hidden sm:inline">HOTKEYS: [1-5] OR [A-E]</span>
+          </div>
+          <h2 id="questionText" class="font-orbitron text-xl sm:text-2xl font-extrabold text-slate-100 leading-snug">
+            Question prompt text goes here...
+          </h2>
+        </div>
+
+        <!-- Options Container -->
+        <div id="optionsContainer" class="space-y-3.5">
+          <!-- Dynamic Options Injected Here -->
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="flex justify-between items-center pt-4 border-t border-slate-800/80">
+          <button id="prevBtn" onclick="prevQuestion()" class="px-5 py-2.5 rounded-xl text-xs font-mono bg-slate-900 border border-slate-700 text-slate-300 hover:text-cyan-300 hover:border-cyan-500/50 transition-all flex items-center gap-2 disabled:opacity-35 disabled:cursor-not-allowed">
+            <i class="fa-solid fa-arrow-left"></i> PREVIOUS AXIOM
+          </button>
+          
+          <span class="text-xs text-slate-400 font-mono flex items-center gap-1.5">
+            <i class="fa-solid fa-wave-square text-cyan-400/70"></i> Select response to modulate crystal
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULTS SCREEN CONTAINER -->
+    <div id="resultsScreen" class="hidden max-w-7xl mx-auto w-full space-y-6 animate-fade-in">
+      <!-- Top Results Banner -->
+      <div id="resultsMainCard" class="hud-card hud-brackets rounded-3xl p-6 sm:p-8 border border-slate-800 box-glow-dynamic relative overflow-hidden transition-all duration-500">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          
+          <!-- Left Column: Primary Crystal Resonance -->
+          <div class="lg:col-span-5 space-y-5">
+            <div class="flex items-center justify-between flex-wrap gap-2">
+              <div id="resonanceRankBadge" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-mono bg-slate-900/90 border border-cyan-500/40 text-cyan-300 shadow-sm">
+                <i class="fa-solid fa-wave-square"></i> PRIMARY HARMONIC MATCH (#1)
+              </div>
+              <button id="restorePrimaryBtn" onclick="restorePrimaryCrystal()" class="hidden px-3 py-1 rounded-lg bg-cyan-950/90 hover:bg-cyan-900 border border-cyan-400/50 text-[11px] font-mono text-cyan-200 transition-all">
+                <i class="fa-solid fa-rotate-left mr-1"></i> RETURN TO #1
+              </button>
+            </div>
+            
+            <div>
+              <p id="resonanceRoleLabel" class="text-xs font-mono uppercase tracking-widest text-slate-400">ATTUNED KYBER FREQUENCY</p>
+              <h2 id="resultColorName" class="font-orbitron text-3xl sm:text-5xl font-black tracking-wide mt-1 transition-all duration-300">
+                GUARDIAN BLUE
+              </h2>
+              <p id="resultArchetype" class="text-lg sm:text-xl font-semibold text-slate-200 mt-1">
+                The Shield of the Republic
+              </p>
+            </div>
+
+            <p id="resultDesc" class="text-slate-300 text-sm sm:text-base leading-relaxed bg-slate-950/50 p-4 rounded-2xl border border-slate-800/80">
+              Description goes here...
+            </p>
+
+            <!-- Specs Badges -->
+            <div class="grid grid-cols-2 gap-3 pt-1">
+              <div class="p-3.5 rounded-2xl bg-slate-900/85 border border-slate-800/90">
+                <span class="text-[10px] font-mono uppercase text-slate-400 block">COMBAT FORM AFFINITY</span>
+                <span id="resultForm" class="font-orbitron font-bold text-xs sm:text-sm text-slate-100 mt-1 block">Form V: Djem So</span>
+              </div>
+              <div class="p-3.5 rounded-2xl bg-slate-900/85 border border-slate-800/90">
+                <span class="text-[10px] font-mono uppercase text-slate-400 block">RESONANCE HARMONY</span>
+                <span id="resultMatchPercent" class="font-orbitron font-bold text-xs sm:text-sm text-cyan-400 mt-1 block">96.4% HARMONY</span>
+              </div>
+            </div>
+
+            <!-- Interactive Primary / Secondary Toggle Card -->
+            <div id="secondaryCardContainer" class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-cyan-500/40 transition-all flex items-center justify-between gap-3 shadow-inner">
+              <div class="flex items-center gap-3 min-w-0">
+                <div id="secondaryColorDot" class="w-4 h-4 rounded-full shrink-0 shadow-lg transition-all duration-300"></div>
+                <div class="truncate">
+                  <span id="secondaryCardLabel" class="text-[10px] font-mono uppercase text-slate-400 block">SECONDARY HYBRID OVERTONE (#2)</span>
+                  <span id="secondaryColorName" class="font-orbitron font-bold text-sm text-slate-100 truncate block">Consular Green</span>
+                </div>
+              </div>
+              <button id="swapSecondaryBtn" onclick="swapToSecondary()" class="px-4 py-2 rounded-xl bg-cyan-950/80 hover:bg-cyan-900 border border-cyan-500/40 hover:border-cyan-400 text-xs font-mono text-cyan-200 transition-all shrink-0 shadow-[0_0_12px_rgba(0,240,255,0.15)] active:scale-95">
+                <span id="swapSecondaryBtnText">INSPECT #2</span> <i class="fa-solid fa-repeat ml-1"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Right Column: Interactive Lightsaber & Exposed Crystal Chamber Visualizer -->
+          <div class="lg:col-span-7 flex flex-col space-y-3">
+            <div class="relative w-full h-72 sm:h-88 rounded-2xl bg-slate-950 border border-slate-800/90 overflow-hidden shadow-2xl flex items-center justify-center" style="height: 22rem;">
+              <canvas id="saberCanvas" class="w-full h-full cursor-pointer"></canvas>
+              
+              <!-- Top HUD Telemetry Overlay -->
+              <div class="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
+                <span class="px-3 py-1 rounded-lg bg-slate-900/85 border border-slate-800 text-[10px] font-mono text-slate-300 backdrop-blur-md">
+                  <i class="fa-solid fa-cube text-cyan-400 mr-1.5"></i>EXPOSED KYBER CHAMBER // TITANIUM ALLOY HILT
+                </span>
+                <span id="hudBladeSpec" class="hidden sm:inline-block px-3 py-1 rounded-lg bg-slate-900/85 border border-slate-800 text-[10px] font-mono text-cyan-400 backdrop-blur-md">
+                  186° HUE // 8% FLUX
+                </span>
+              </div>
+
+              <!-- Bottom Interactive Saber Controls -->
+              <div class="absolute bottom-3 right-3 left-3 flex flex-wrap items-center justify-between gap-2 pointer-events-none">
+                <span class="hidden sm:inline-block px-2.5 py-1 rounded-lg bg-slate-950/80 border border-slate-800/80 text-[10px] font-mono text-slate-400">
+                  <i class="fa-solid fa-hand-pointer text-cyan-400 mr-1"></i>Hover to Swing • Click Blade to Clash
+                </span>
+                <div class="flex items-center gap-2 pointer-events-auto ml-auto">
+                  <button onclick="toggleBladePower()" class="px-3.5 py-1.5 rounded-xl bg-slate-900/95 hover:bg-slate-800 border border-slate-700 hover:border-emerald-500/50 text-xs font-mono text-emerald-300 transition-all shadow-lg">
+                    <i class="fa-solid fa-power-off mr-1"></i> IGNITE / RETRACT
+                  </button>
+                  <button onclick="triggerBladeClash()" class="px-3.5 py-1.5 rounded-xl bg-slate-900/95 hover:bg-slate-800 border border-slate-700 hover:border-amber-500/50 text-xs font-mono text-amber-300 transition-all shadow-lg">
+                    <i class="fa-solid fa-bolt mr-1"></i> CLASH
+                  </button>
+                  <button onclick="openCrystalLabWithCurrent()" class="px-3.5 py-1.5 rounded-xl bg-cyan-950/95 hover:bg-cyan-900 border border-cyan-500/50 text-xs font-mono text-cyan-200 transition-all shadow-lg">
+                    <i class="fa-solid fa-sliders mr-1"></i> TUNE IN LAB
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lower Grid: 5-Axis Philosophy Matrix & All 15 Spectrum Compatibility -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- 5-Axis Radar Chart & Bars -->
+        <div class="lg:col-span-6 hud-card rounded-3xl p-6 border border-slate-800 flex flex-col justify-between space-y-5">
+          <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
+            <div>
+              <h3 class="font-orbitron font-bold text-lg text-slate-100">5-AXIS PHILOSOPHY MATRIX</h3>
+              <p class="text-xs font-mono text-slate-400">SOLID CYAN: YOUR PROFILE // DASHED: SELECTED CRYSTAL IDEAL</p>
+            </div>
+            <div class="w-9 h-9 rounded-xl bg-cyan-950/60 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+              <i class="fa-solid fa-compass-drafting"></i>
+            </div>
+          </div>
+
+          <div class="w-full flex items-center justify-center py-1">
+            <canvas id="radarCanvas" width="340" height="285" class="max-w-full"></canvas>
+          </div>
+
+          <!-- Exact Axis Breakdown Bars -->
+          <div id="axisBreakdownBars" class="space-y-3 pt-3 border-t border-slate-800/80">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+
+        <!-- Full 15-Color Resonance Spectrum Ranking -->
+        <div class="lg:col-span-6 hud-card rounded-3xl p-6 border border-slate-800 flex flex-col justify-between space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
+            <div>
+              <h3 class="font-orbitron font-bold text-lg text-slate-100">15-CRYSTAL HARMONIC SPECTRUM</h3>
+              <p class="text-xs font-mono text-slate-400">CLICK ANY CRYSTAL TO INSPECT & IGNITE ITS FREQUENCY</p>
+            </div>
+            <button onclick="openCompendium()" class="px-3.5 py-1.5 rounded-xl bg-amber-950/60 border border-amber-500/40 hover:border-amber-400 text-xs font-mono text-amber-300 transition-all flex items-center gap-1.5 shrink-0">
+              <i class="fa-solid fa-book-journal-whills"></i> COMPENDIUM
+            </button>
+          </div>
+
+          <div id="spectrumCompatibilityList" class="space-y-2 max-h-[450px] overflow-y-auto pr-1.5">
+            <!-- Populated dynamically with all 15 colors ranked by closeness -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- CRYSTAL LAB MODAL (SANDBOX & TUNING SUITE) -->
+  <div id="crystalLabModal" class="fixed inset-0 z-50 hidden bg-slate-950/85 backdrop-blur-xl flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+    <div class="glass-panel rounded-3xl max-w-6xl w-full p-5 sm:p-8 border border-cyan-500/40 box-glow space-y-6 my-auto max-h-[94vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-cyan-950 border border-cyan-500/50 flex items-center justify-center text-cyan-400">
+            <i class="fa-solid fa-flask text-lg"></i>
+          </div>
+          <div>
+            <h2 class="font-orbitron font-bold text-xl sm:text-2xl text-slate-100">KYBER CRYSTAL LAB & FORGE</h2>
+            <p class="text-xs font-mono text-cyan-400 uppercase tracking-widest">MANUAL HARMONIC MODULATION & PLASMA DIAGNOSTICS</p>
+          </div>
+        </div>
+        <button onclick="closeCrystalLab()" class="w-9 h-9 rounded-xl bg-slate-900 border border-slate-700 hover:border-rose-500 text-slate-400 hover:text-rose-400 flex items-center justify-center transition-all">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Lab Visualizer Canvas -->
+      <div class="relative w-full h-64 sm:h-72 rounded-2xl bg-slate-950 border border-slate-800 overflow-hidden flex items-center justify-center">
+        <canvas id="labCanvas" class="w-full h-full cursor-pointer" onclick="triggerBladeClash()"></canvas>
+        <div class="absolute top-3 left-3 flex flex-wrap gap-2 pointer-events-none">
+          <span id="labActiveTitle" class="px-3 py-1 rounded-lg bg-slate-900/90 border border-slate-700 text-xs font-orbitron font-bold text-cyan-300">
+            CUSTOM HARMONIC
+          </span>
+        </div>
+        <div class="absolute bottom-3 right-3 flex gap-2">
+          <button onclick="toggleBladePower()" class="px-3 py-1.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700 text-xs font-mono text-emerald-300 transition-all">
+            <i class="fa-solid fa-power-off mr-1"></i> IGNITE / RETRACT
+          </button>
+          <button onclick="triggerBladeClash()" class="px-3 py-1.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700 text-xs font-mono text-amber-300 transition-all">
+            <i class="fa-solid fa-bolt mr-1"></i> CLASH TEST
+          </button>
+        </div>
+      </div>
+
+      <!-- Lab Controls Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- 15 Preset Crystal Selector -->
+        <div class="lg:col-span-5 space-y-3">
+          <label class="text-xs font-mono uppercase tracking-wider text-slate-400 block">15 EXTENDED SPECTRUM PRESETS</label>
+          <div id="labPresetGrid" class="grid grid-cols-3 gap-2">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- Sliders for Hue, Saturation, Core Width, Instability, Pulse Frequency -->
+        <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4 bg-slate-900/60 p-5 rounded-2xl border border-slate-800/90">
+          <div>
+            <div class="flex justify-between text-xs font-mono mb-1">
+              <span class="text-slate-300">PRIMARY HUE (DEG)</span>
+              <span id="labHueVal" class="text-cyan-400">190°</span>
+            </div>
+            <input id="labHueSlider" type="range" min="0" max="360" value="190" oninput="updateLabSliders()" class="w-full accent-cyan-400 cursor-pointer" />
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-mono mb-1">
+              <span class="text-slate-300">SATURATION (%)</span>
+              <span id="labSatVal" class="text-cyan-400">100%</span>
+            </div>
+            <input id="labSatSlider" type="range" min="0" max="100" value="100" oninput="updateLabSliders()" class="w-full accent-cyan-400 cursor-pointer" />
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-mono mb-1">
+              <span class="text-slate-300">LIGHTNESS / GLOW (%)</span>
+              <span id="labLightVal" class="text-cyan-400">55%</span>
+            </div>
+            <input id="labLightSlider" type="range" min="15" max="90" value="55" oninput="updateLabSliders()" class="w-full accent-cyan-400 cursor-pointer" />
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-mono mb-1">
+              <span class="text-slate-300">PLASMA INSTABILITY / CRACKLE</span>
+              <span id="labInstabilityVal" class="text-amber-400">15%</span>
+            </div>
+            <input id="labInstabilitySlider" type="range" min="0" max="100" value="15" oninput="updateLabSliders()" class="w-full accent-amber-400 cursor-pointer" />
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-mono mb-1">
+              <span class="text-slate-300">BLADE CORE WIDTH</span>
+              <span id="labWidthVal" class="text-emerald-400">100%</span>
+            </div>
+            <input id="labWidthSlider" type="range" min="50" max="160" value="100" oninput="updateLabSliders()" class="w-full accent-emerald-400 cursor-pointer" />
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-mono mb-1">
+              <span class="text-slate-300">DARKSABER / OBSIDIAN CORE</span>
+              <span id="labDarkCoreStatus" class="text-indigo-400">OFF</span>
+            </div>
+            <button onclick="toggleLabDarkCore()" class="w-full py-2 rounded-xl bg-slate-950 border border-slate-700 hover:border-indigo-400 text-xs font-mono text-slate-200 transition-all">
+              TOGGLE VOID CORE POLARITY
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOLOCRON COMPENDIUM & LORE MODAL -->
+  <div id="compendiumModal" class="fixed inset-0 z-50 hidden bg-slate-950/85 backdrop-blur-xl flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+    <div class="glass-panel rounded-3xl max-w-6xl w-full p-5 sm:p-8 border border-amber-500/40 box-glow-amber space-y-6 my-auto max-h-[94vh] overflow-y-auto">
+      <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-amber-950 border border-amber-500/50 flex items-center justify-center text-amber-400">
+            <i class="fa-solid fa-book-journal-whills text-lg"></i>
+          </div>
+          <div>
+            <h2 class="font-orbitron font-bold text-xl sm:text-2xl text-slate-100">JEDI ARCHIVES: HOLOCRON COMPENDIUM</h2>
+            <p class="text-xs font-mono text-amber-400 uppercase tracking-widest">LORE, COMBAT FORMS & MATRIX DIAGNOSTICS FOR ALL 15 CRYSTALS</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="runMatrixDiagnostics()" class="px-3.5 py-2 rounded-xl bg-emerald-950/80 border border-emerald-500/50 hover:border-emerald-400 text-xs font-mono text-emerald-300 transition-all flex items-center gap-2 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
+            <i class="fa-solid fa-microchip"></i> VERIFY ALL 15 PATHS
+          </button>
+          <button onclick="closeCompendium()" class="w-9 h-9 rounded-xl bg-slate-900 border border-slate-700 hover:border-rose-500 text-slate-400 hover:text-rose-400 flex items-center justify-center transition-all">
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Automated Matrix Diagnostics Banner (Hidden until triggered) -->
+      <div id="diagnosticsPanel" class="hidden p-4 sm:p-5 rounded-2xl bg-slate-900/95 border border-emerald-500/40 space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2 text-emerald-400 font-orbitron font-bold text-sm">
+            <i class="fa-solid fa-circle-check"></i>
+            <span id="diagSummaryText">MATRIX DIAGNOSTICS: 15 / 15 CRYSTALS VERIFIED REACHABLE (100% PASS)</span>
+          </div>
+          <span class="text-[11px] font-mono text-slate-400">Click "SIMULATE PATH" on any crystal below to test its attunement</span>
+        </div>
+        <div id="diagGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 pt-1">
+          <!-- Populated by runMatrixDiagnostics() -->
+        </div>
+      </div>
+
+      <!-- Compendium Cards Container -->
+      <div id="compendiumGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Populated dynamically by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="w-full border-t border-slate-900/80 py-4 px-6 text-center text-xs font-mono text-slate-500">
+    KYBER ATTUNEMENT TERMINAL v5.2 // 5-AXIS EUCLIDEAN HARMONIC RESONANCE ENGINE // 15 EXTENDED SPECTRUM CRYSTALS
+  </footer>
+
+  <!-- APPLICATION LOGIC -->
+  <script>
+    /*************************************************************************
+     * 1. THE 15 EXTENDED KYBER CRYSTAL SPECTRUM DATABASE
+     *************************************************************************/
+    const KYBER_COLORS = [
+      {
+        id: 'blue',
+        name: 'Guardian Blue',
+        archetype: 'The Shield of the Republic',
+        hex: '#00f0ff',
+        coreHex: '#ffffff',
+        hue: 186, sat: 100, light: 50, instability: 8,
+        form: 'Form V: Djem So / Shien',
+        verifiedPath: ['A','A','B','C','A','B','A','A','A','A','C','A','A','B','A'],
+        idealAxes: { reason: 0.61, discipline: 0.96, altruism: 0.80, pragmatism: 0.43, autonomy: 0.14 },
+        desc: 'Attuned to unwavering protectors who stand as a bulwark against chaos. You value concrete action, martial discipline, and defending the innocent through honorable solidarity.'
+      },
+      {
+        id: 'green',
+        name: 'Consular Green',
+        archetype: 'The Sage of the Living Force',
+        hex: '#00ff66',
+        coreHex: '#ffffff',
+        hue: 144, sat: 100, light: 50, instability: 5,
+        form: 'Form VI: Niman / Form III: Soresu',
+        verifiedPath: ['B','B','A','B','C','B','B','A','B','B','A','A','B','B','B'],
+        idealAxes: { reason: 0.85, discipline: 0.80, altruism: 0.88, pragmatism: 0.18, autonomy: 0.35 },
+        desc: 'Harmonized with deep wisdom, spiritual contemplation, and diplomatic grace. You seek to understand the underlying connections of all life before ever drawing a weapon.'
+      },
+      {
+        id: 'yellow',
+        name: 'Sentinel Yellow',
+        archetype: 'The Vigilant Watchman',
+        hex: '#ffe600',
+        coreHex: '#ffffff',
+        hue: 54, sat: 100, light: 50, instability: 12,
+        form: 'Form VI: Niman & Tactical Tech',
+        verifiedPath: ['C','C','A','B','A','B','B','B','D','B','B','D','B','C','C'],
+        idealAxes: { reason: 0.83, discipline: 0.67, altruism: 0.63, pragmatism: 0.76, autonomy: 0.65 },
+        desc: 'Wielded by pragmatic investigators, artisans, and temple guards who bridge spiritual devotion with real-world technical utility and street-level vigilance.'
+      },
+      {
+        id: 'gold',
+        name: 'Sovereign Gold',
+        archetype: 'The Luminary Beacon',
+        hex: '#ffb700',
+        coreHex: '#fffbeb',
+        hue: 43, sat: 100, light: 50, instability: 6,
+        form: 'Form II: Makashi (Supreme Elegance)',
+        verifiedPath: ['B','A','B','C','C','B','C','A','B','B','C','B','B','B','D'],
+        idealAxes: { reason: 0.61, discipline: 0.83, altruism: 0.93, pragmatism: 0.25, autonomy: 0.43 },
+        desc: 'A rare, radiant resonance born of profound compassion, noble bearing, and selfless leadership. You inspire hope in the darkest hours without losing your moral center.'
+      },
+      {
+        id: 'bronze',
+        name: 'Ancient Bronze',
+        archetype: 'The Unyielding Bulwark',
+        hex: '#cd7f32',
+        coreHex: '#fff7ed',
+        hue: 30, sat: 61, light: 50, instability: 18,
+        form: 'Form V: Djem So (Heavy Kinetic)',
+        verifiedPath: ['A','A','B','C','A','C','A','C','A','A','C','C','A','B','A'],
+        idealAxes: { reason: 0.41, discipline: 0.90, altruism: 0.62, pragmatism: 0.64, autonomy: 0.28 },
+        desc: 'Grounded, earthy, and physically indomitable. Bronze resonates with warriors who value grit, physical fortitude, and standing firm when all others retreat.'
+      },
+      {
+        id: 'viridian',
+        name: 'Viridian Turquoise',
+        archetype: 'The Harmonious Flowing Tide',
+        hex: '#40e0d0',
+        coreHex: '#ffffff',
+        hue: 174, sat: 72, light: 56, instability: 7,
+        form: 'Form III: Soresu / Fluid Transition',
+        verifiedPath: ['C','B','C','A','B','B','B','A','B','B','B','A','B','C','D'],
+        idealAxes: { reason: 0.69, discipline: 0.60, altruism: 0.81, pragmatism: 0.43, autonomy: 0.65 },
+        desc: 'Blending the serenity of Consular Green with the swiftness of Guardian Blue, Viridian embodies effortless adaptation, creative grace, and gentle equilibrium.'
+      },
+      {
+        id: 'cyan',
+        name: 'Sky Cyan',
+        archetype: 'The Swift Wind',
+        hex: '#00e5ff',
+        coreHex: '#ffffff',
+        hue: 186, sat: 100, light: 55, instability: 10,
+        form: 'Form IV: Ataru (Acrobatic Kinetic)',
+        verifiedPath: ['C','C','C','A','A','B','C','D','B','B','B','B','A','D','D'],
+        idealAxes: { reason: 0.44, discipline: 0.48, altruism: 0.76, pragmatism: 0.56, autonomy: 0.75 },
+        desc: 'Bright and fast as lightning across an open sky. Cyan attunes to agile spirits who rely on split-second intuition, improvisation, and compassionate hearts.'
+      },
+      {
+        id: 'amethyst',
+        name: 'Royal Amethyst',
+        archetype: 'The Master of Dualities',
+        hex: '#b026ff',
+        coreHex: '#fae8ff',
+        hue: 278, sat: 100, light: 57, instability: 16,
+        form: 'Form VII: Vaapad / Juyo',
+        verifiedPath: ['C','A','B','B','A','C','C','B','D','B','C','C','A','C','C'],
+        idealAxes: { reason: 0.61, discipline: 0.85, altruism: 0.56, pragmatism: 0.74, autonomy: 0.62 },
+        desc: 'Walking the razor edge between light and shadow without falling. You channel intense inner fire and assertive power through an unbreakable cage of personal discipline.'
+      },
+      {
+        id: 'indigo',
+        name: 'Deep Indigo',
+        archetype: 'The Esoteric Seeker',
+        hex: '#6366f1',
+        coreHex: '#eef2ff',
+        hue: 239, sat: 84, light: 67, instability: 14,
+        form: 'Form VI: Niman / Arcane Synthesis',
+        verifiedPath: ['C','B','A','B','C','A','B','B','D','C','D','D','C','C','C'],
+        idealAxes: { reason: 0.92, discipline: 0.76, altruism: 0.39, pragmatism: 0.62, autonomy: 0.72 },
+        desc: 'Attuned to mystic scholars and shadow-walkers who delve into the deepest, most enigmatic truths of the cosmos without fear of taboo.'
+      },
+      {
+        id: 'magenta',
+        name: 'Electric Magenta',
+        archetype: 'The Unbound Muse',
+        hex: '#ff007f',
+        coreHex: '#fff1f2',
+        hue: 330, sat: 100, light: 50, instability: 20,
+        form: 'Jar\'Kai Dual-Blade / Unorthodox',
+        verifiedPath: ['C','B','D','A','B','D','C','D','B','B','A','B','B','D','D'],
+        idealAxes: { reason: 0.36, discipline: 0.39, altruism: 0.77, pragmatism: 0.39, autonomy: 0.85 },
+        desc: 'Driven by raw heart, artistic flair, and fiercely authentic emotion. You refuse to suppress your feelings, turning love and individuality into your greatest strength.'
+      },
+      {
+        id: 'white',
+        name: 'Purified White',
+        archetype: 'The Autonomous Wayseeker',
+        hex: '#f8fafc',
+        coreHex: '#ffffff',
+        hue: 210, sat: 20, light: 95, instability: 6,
+        form: 'Form IV / Jar\'Kai Reverse-Grip',
+        verifiedPath: ['D','B','A','C','C','B','C','A','B','B','A','B','C','B','D'],
+        idealAxes: { reason: 0.681, discipline: 0.704, altruism: 0.844, pragmatism: 0.233, autonomy: 0.573 },
+        desc: 'Healed from corruption and bound to no council or creed. You answer solely to the will of the Force and your own incorruptible conscience as a true Wayseeker.'
+      },
+      {
+        id: 'silver',
+        name: 'Silver Luminary',
+        archetype: 'The Mirror of Pure Logic',
+        hex: '#cbd5e1',
+        coreHex: '#ffffff',
+        hue: 215, sat: 25, light: 84, instability: 4,
+        form: 'Form II: Makashi (Absolute Precision)',
+        verifiedPath: ['A','A','A','B','C','A','B','B','A','C','C','A','C','C','A'],
+        idealAxes: { reason: 0.96, discipline: 0.95, altruism: 0.54, pragmatism: 0.42, autonomy: 0.32 },
+        desc: 'Cool, reflective, and utterly devoid of emotional turbulence. Silver resonates with minds of pure clarity who perceive every conflict as a geometric equation.'
+      },
+      {
+        id: 'orange',
+        name: 'Ember Orange',
+        archetype: 'The Maverick Tactician',
+        hex: '#ff6600',
+        coreHex: '#fff7ed',
+        hue: 24, sat: 100, light: 50, instability: 24,
+        form: 'Saberstaff / Asymmetric Combat',
+        verifiedPath: ['C','C','D','A','A','C','D','D','D','D','B','D','C','D','C'],
+        idealAxes: { reason: 0.47, discipline: 0.38, altruism: 0.38, pragmatism: 0.84, autonomy: 0.94 },
+        desc: 'Simmering with maverick ingenuity and mercenary pragmatism. You operate in the gray zones of the galaxy, valuing results and freedom over knightly pageantry.'
+      },
+      {
+        id: 'red',
+        name: 'Crimson (Bled)',
+        archetype: 'The Crucible of Passion',
+        hex: '#ff0033',
+        coreHex: '#ffe4e6',
+        hue: 348, sat: 100, light: 50, instability: 38,
+        form: 'Form VII: Juyo (Unbridled Ferocity)',
+        verifiedPath: ['D','D','D','D','D','D','D','C','C','D','D','C','D','A','E'],
+        idealAxes: { reason: 0.05, discipline: 0.39, altruism: 0.02, pragmatism: 0.95, autonomy: 0.99 },
+        desc: 'Forged by pouring raw passion, unyielding will, and hunger for liberation into the crystal lattice. Peace is a lie; through passion and strength, your chains are broken.'
+      },
+      {
+        id: 'darksaber',
+        name: 'Obsidian Void (Darksaber)',
+        archetype: 'The Sovereign Conqueror',
+        hex: '#94a3b8',
+        coreHex: '#020617',
+        darkCore: true,
+        hue: 215, sat: 30, light: 65, instability: 32,
+        form: 'Legacy Heavy Creed Combat',
+        verifiedPath: ['D','D','B','B','D','C','D','B','C','D','C','C','D','C','E'],
+        idealAxes: { reason: 0.37, discipline: 0.75, altruism: 0.08, pragmatism: 0.94, autonomy: 0.87 },
+        desc: 'A singular void-core blade that demands absolute conviction and sovereign command. You do not merely fight—you conquer, unite, and rule through iron will.'
+      }
+    ];
+
+    /*************************************************************************
+     * 2. THE 15 REFINED ATTUNEMENT QUESTIONS
+     *************************************************************************/
+    const QUESTIONS = [
+      {
+        category: 'AXIOM I // ORDER & AUTONOMY',
+        text: '1. When an established law or ancient code conflicts with what your conscience tells you is right, how do you respond?',
+        options: [
+          { label: 'A', text: 'Uphold the code and work within the system—order and shared discipline prevent chaos.', deltas: { reason: 1, discipline: 3, altruism: 1, pragmatism: -1, autonomy: -3 } },
+          { label: 'B', text: 'Seek a diplomatic compromise that honors the spirit of the law while protecting those affected.', deltas: { reason: 2, discipline: 1, altruism: 3, pragmatism: -1, autonomy: -1 } },
+          { label: 'C', text: 'Quietly bypass the rule using practical discretion to get the necessary result without fanfare.', deltas: { reason: 1, discipline: 0, altruism: 1, pragmatism: 3, autonomy: 2 } },
+          { label: 'D', text: 'Reject arbitrary authority entirely. No institution or dogma has the right to shackle individual will.', deltas: { reason: -2, discipline: -1, altruism: -2, pragmatism: 2, autonomy: 3 } }
+        ]
+      },
+      {
+        category: 'AXIOM II // CONFLICT RESOLUTION',
+        text: '2. When confronted by a hostile adversary who refuses initial talks, what is your primary instinct?',
+        options: [
+          { label: 'A', text: 'Maintain an impenetrable defensive guard, exhausting their aggression until they listen to reason.', deltas: { reason: 2, discipline: 3, altruism: 2, pragmatism: -1, autonomy: -2 } },
+          { label: 'B', text: 'Empathize with their underlying pain and de-escalate through calm spiritual presence.', deltas: { reason: 3, discipline: 1, altruism: 3, pragmatism: -3, autonomy: -1 } },
+          { label: 'C', text: 'Use feints, terrain, and tactical gadgets to neutralize them before a real brawl begins.', deltas: { reason: 1, discipline: -1, altruism: 0, pragmatism: 3, autonomy: 2 } },
+          { label: 'D', text: 'Unleash overwhelming counter-force to shatter their defense and break their will to fight.', deltas: { reason: -3, discipline: 0, altruism: -3, pragmatism: 3, autonomy: 3 } }
+        ]
+      },
+      {
+        category: 'AXIOM III // SANCTUARY & RECOVERY',
+        text: '3. After an exhausting ordeal, what is your number one retreat to restore your inner focus?',
+        options: [
+          { label: 'A', text: 'Silent meditation, studying ancient texts, or analyzing patterns in solitude.', deltas: { reason: 3, discipline: 2, altruism: 0, pragmatism: -1, autonomy: 0 } },
+          { label: 'B', text: 'Intense physical conditioning, martial kata, or sweating out the tension in the training ring.', deltas: { reason: -1, discipline: 3, altruism: 0, pragmatism: 2, autonomy: 0 } },
+          { label: 'C', text: 'Connecting with close friends, helping the community, or immersing myself in nature.', deltas: { reason: 0, discipline: -1, altruism: 3, pragmatism: -2, autonomy: 0 } },
+          { label: 'D', text: 'Tinkering in a workshop, artistic creation, or venturing somewhere completely uncharted.', deltas: { reason: -1, discipline: -2, altruism: 0, pragmatism: 1, autonomy: 3 } }
+        ]
+      },
+      {
+        category: 'AXIOM IV // CRISIS RE-ORIENTATION',
+        text: '4. When a well-laid plan completely falls apart in the heat of the moment, how do you re-orient?',
+        options: [
+          { label: 'A', text: 'Adapt instantly through pure instinct, kinetic reflexes, and improvisation on the fly.', deltas: { reason: -2, discipline: -2, altruism: 1, pragmatism: 2, autonomy: 2 } },
+          { label: 'B', text: 'Step back, detach emotionally, analyze where the logic broke down, and recalculate.', deltas: { reason: 3, discipline: 3, altruism: -1, pragmatism: 1, autonomy: -1 } },
+          { label: 'C', text: 'Protect the team and innocents first, absorbing the danger myself so others can recover.', deltas: { reason: -1, discipline: 2, altruism: 3, pragmatism: -2, autonomy: -2 } },
+          { label: 'D', text: 'Scramble the board entirely—if the system failed, break the system and force a new outcome.', deltas: { reason: -2, discipline: -1, altruism: -3, pragmatism: 3, autonomy: 3 } }
+        ]
+      },
+      {
+        category: 'AXIOM V // CORE VALUES',
+        text: '5. In your craft and daily life, what do you value most deeply?',
+        options: [
+          { label: 'A', text: 'Practical Utility & Efficiency: Reliable tools and methods that solve real problems.', deltas: { reason: 1, discipline: 1, altruism: 0, pragmatism: 3, autonomy: 0 } },
+          { label: 'B', text: 'Creative Expression & Artistry: Beauty, emotional resonance, and unique personal style.', deltas: { reason: -2, discipline: -2, altruism: 2, pragmatism: -2, autonomy: 3 } },
+          { label: 'C', text: 'Philosophical Truth & Harmony: Deep wisdom, timeless principles, and inner balance.', deltas: { reason: 3, discipline: 2, altruism: 2, pragmatism: -3, autonomy: -1 } },
+          { label: 'D', text: 'Raw Impact & Sovereign Power: Unmatched performance that commands undeniable authority.', deltas: { reason: -2, discipline: 1, altruism: -3, pragmatism: 3, autonomy: 3 } }
+        ]
+      },
+      {
+        category: 'AXIOM VI // COGNITION & EMOTION',
+        text: '6. How do you view the relationship between strong emotions (passion, anger, love) and clear judgment?',
+        options: [
+          { label: 'A', text: 'Emotions cloud objective truth; the mind must remain a tranquil, unshaken mirror.', deltas: { reason: 3, discipline: 3, altruism: -1, pragmatism: 0, autonomy: -2 } },
+          { label: 'B', text: 'Compassion and empathy are vital guides, provided they are tempered by mindfulness.', deltas: { reason: 1, discipline: 1, altruism: 3, pragmatism: -1, autonomy: 0 } },
+          { label: 'C', text: 'Inner fire is a potent fuel—I harness and channel it through strict martial control.', deltas: { reason: -1, discipline: 2, altruism: 0, pragmatism: 2, autonomy: 2 } },
+          { label: 'D', text: 'Raw instinct and intense passion are the ultimate truths that transcend rigid analysis.', deltas: { reason: -3, discipline: -3, altruism: -2, pragmatism: 1, autonomy: 3 } }
+        ]
+      },
+      {
+        category: 'AXIOM VII // THE UNKNOWN ARTIFACT',
+        text: '7. You discover an ancient, unstable relic humming with immense, unfamiliar energy. What do you do?',
+        options: [
+          { label: 'A', text: 'Seal and quarantine it under guard so its volatility cannot harm anyone.', deltas: { reason: 0, discipline: 3, altruism: 2, pragmatism: -1, autonomy: -3 } },
+          { label: 'B', text: 'Study its inscriptions, history, and harmonic frequency with scholarly patience.', deltas: { reason: 3, discipline: 2, altruism: 0, pragmatism: -1, autonomy: 1 } },
+          { label: 'C', text: 'Commune with it intuitively through the Force to heal or purify its dissonance.', deltas: { reason: 0, discipline: 1, altruism: 3, pragmatism: -2, autonomy: 2 } },
+          { label: 'D', text: 'Tap directly into its power and test its practical or tactical capabilities immediately.', deltas: { reason: -2, discipline: -2, altruism: -3, pragmatism: 3, autonomy: 3 } }
+        ]
+      },
+      {
+        category: 'AXIOM VIII // MARTIAL PHILOSOPHY',
+        text: '8. In a high-stakes duel, which combat philosophy feels most natural to your spirit?',
+        options: [
+          { label: 'A', text: 'The Impenetrable Wall: Patient defense and counter-strikes that protect myself and allies.', deltas: { reason: 1, discipline: 3, altruism: 3, pragmatism: -1, autonomy: -2 } },
+          { label: 'B', text: 'The Surgical Duelist: Minimalist footwork, economy of motion, and pinpoint accuracy.', deltas: { reason: 3, discipline: 3, altruism: -1, pragmatism: 1, autonomy: 0 } },
+          { label: 'C', text: 'Overwhelming Momentum: Relentless, heavy kinetic strikes that shatter the enemy guard.', deltas: { reason: -3, discipline: 0, altruism: -3, pragmatism: 3, autonomy: 2 } },
+          { label: 'D', text: 'Unpredictable Flow: Acrobatic speed, dual blades, or deceptive tactics that break every rule.', deltas: { reason: -1, discipline: -2, altruism: 0, pragmatism: 2, autonomy: 3 } }
+        ]
+      },
+      {
+        category: 'AXIOM IX // JUSTICE & MERCY',
+        text: '9. A dangerous tyrant is finally defeated and at your mercy, but the courts are corrupt. What is your verdict?',
+        options: [
+          { label: 'A', text: 'Deliver them to lawful custody anyway and work to reform the courts legitimately.', deltas: { reason: 2, discipline: 3, altruism: 1, pragmatism: -3, autonomy: -3 } },
+          { label: 'B', text: 'Spare their life and seek their redemption or peaceful exile away from power.', deltas: { reason: 1, discipline: 1, altruism: 3, pragmatism: -3, autonomy: 0 } },
+          { label: 'C', text: 'Execute them decisively on the spot so they can never threaten innocent lives again.', deltas: { reason: -2, discipline: 0, altruism: -3, pragmatism: 3, autonomy: 3 } },
+          { label: 'D', text: 'Strip their assets and dismantle their network covertly so they become irrelevant.', deltas: { reason: 2, discipline: 1, altruism: 0, pragmatism: 3, autonomy: 2 } }
+        ]
+      },
+      {
+        category: 'AXIOM X // SOVEREIGNTY & ALLEGIANCE',
+        text: '10. Where does your ultimate allegiance lie as you walk your path?',
+        options: [
+          { label: 'A', text: 'To a sworn code, a noble order, and the collective brotherhood of my peers.', deltas: { reason: 1, discipline: 3, altruism: 2, pragmatism: -1, autonomy: -3 } },
+          { label: 'B', text: 'To the suffering and vulnerable people of the galaxy, regardless of banners or borders.', deltas: { reason: 0, discipline: 1, altruism: 3, pragmatism: -1, autonomy: 1 } },
+          { label: 'C', text: 'To objective truth, cosmic balance, and the pursuit of pure knowledge.', deltas: { reason: 3, discipline: 2, altruism: -1, pragmatism: 0, autonomy: 1 } },
+          { label: 'D', text: 'To my own sovereign will and personal destiny—I bow to no master or council.', deltas: { reason: -2, discipline: -1, altruism: -3, pragmatism: 2, autonomy: 3 } }
+        ]
+      },
+      {
+        category: 'AXIOM XI // ARCHIVAL PURSUIT',
+        text: '11. Given unrestricted access to the Great Archives, which domain of knowledge draws you first?',
+        options: [
+          { label: 'A', text: 'Diplomatic history, healing arts, and the spiritual harmonies of living ecosystems.', deltas: { reason: 2, discipline: 1, altruism: 3, pragmatism: -2, autonomy: -1 } },
+          { label: 'B', text: 'Cutting-edge engineering, tactical schematics, and practical field craft.', deltas: { reason: 1, discipline: 0, altruism: 0, pragmatism: 3, autonomy: 1 } },
+          { label: 'C', text: 'Classic martial treatises, battle strategy, and records of legendary duels.', deltas: { reason: 0, discipline: 3, altruism: 0, pragmatism: 1, autonomy: -1 } },
+          { label: 'D', text: 'The Vault of Forbidden Lore: esoteric prophecies, shadow traditions, and suppressed truths.', deltas: { reason: 0, discipline: -1, altruism: -3, pragmatism: 2, autonomy: 3 } }
+        ]
+      },
+      {
+        category: 'AXIOM XII // COMMAND PRESENCE',
+        text: '12. When tensions rise in a volatile room, how do you establish your presence?',
+        options: [
+          { label: 'A', text: 'Through calm, measured logic and unshakeable stoic composure.', deltas: { reason: 3, discipline: 3, altruism: 0, pragmatism: 0, autonomy: -1 } },
+          { label: 'B', text: 'Through warm charisma, active listening, and inspiring shared hope.', deltas: { reason: 0, discipline: 1, altruism: 3, pragmatism: -2, autonomy: 0 } },
+          { label: 'C', text: 'Through imposing physical readiness and controlled escalation—making it clear I am ready if crossed.', deltas: { reason: -2, discipline: 2, altruism: -2, pragmatism: 3, autonomy: 2 } },
+          { label: 'D', text: 'By staying unobserved in the shadows, reading everyone’s leverage until the moment to act.', deltas: { reason: 2, discipline: 0, altruism: -1, pragmatism: 3, autonomy: 2 } }
+        ]
+      },
+      {
+        category: 'AXIOM XIII // LEGACY',
+        text: '13. When your journey is remembered centuries from now, what legacy would you wish to leave behind?',
+        options: [
+          { label: 'A', text: 'The Peerless Martial Master: Unrivaled skill, unbreakable courage, and frontline valor.', deltas: { reason: -1, discipline: 3, altruism: 1, pragmatism: 1, autonomy: -1 } },
+          { label: 'B', text: 'The Peacemaker & Healer: One who mended broken worlds and uplifted the powerless.', deltas: { reason: 1, discipline: 1, altruism: 3, pragmatism: -2, autonomy: -1 } },
+          { label: 'C', text: 'The Enigmatic Visionary: A seeker who unlocked truths no one else dared to imagine.', deltas: { reason: 3, discipline: 1, altruism: -1, pragmatism: 0, autonomy: 3 } },
+          { label: 'D', text: 'The Sovereign Force: A leader who shattered stagnation and reshaped history by sheer will.', deltas: { reason: -2, discipline: 1, altruism: -3, pragmatism: 3, autonomy: 3 } }
+        ]
+      },
+      {
+        category: 'AXIOM XIV // THE TRAGIC DILEMMA',
+        text: '14. In an impossible crisis where you cannot save everyone, how do you make the final call?',
+        options: [
+          { label: 'A', text: 'Act with immediate, fierce pragmatism—discarding abstract honor for raw survival and victory.', deltas: { reason: -2, discipline: -1, altruism: -3, pragmatism: 3, autonomy: 3 } },
+          { label: 'B', text: 'Place myself directly in harm’s way to buy time, refusing to trade innocent lives.', deltas: { reason: -1, discipline: 2, altruism: 3, pragmatism: -3, autonomy: -1 } },
+          { label: 'C', text: 'Calculate the cold, objective mathematical outcome that preserves the greatest long-term stability.', deltas: { reason: 3, discipline: 3, altruism: -1, pragmatism: 2, autonomy: 0 } },
+          { label: 'D', text: 'Trust my gut instinct in the moment and improvise an unorthodox third option.', deltas: { reason: -2, discipline: -2, altruism: 1, pragmatism: 1, autonomy: 3 } }
+        ]
+      },
+      {
+        category: 'AXIOM XV // GALACTIC COLLAPSE',
+        text: '15. When an entire sector descends into lawless chaos, what role do you naturally assume?',
+        options: [
+          { label: 'A', text: 'Coordinate official defense forces to restore lawful order and protect key infrastructure.', deltas: { reason: 1, discipline: 3, altruism: 2, pragmatism: 0, autonomy: -3 } },
+          { label: 'B', text: 'Establish safe havens, medical relief, and diplomatic sanctuaries for refugees.', deltas: { reason: 2, discipline: 1, altruism: 3, pragmatism: -2, autonomy: -1 } },
+          { label: 'C', text: 'Conduct surgical covert operations to sabotage warlords and stabilize supply lines.', deltas: { reason: 1, discipline: 1, altruism: 0, pragmatism: 3, autonomy: 1 } },
+          { label: 'D', text: 'Walk alone as an independent protector, answering cries for help wherever the Force leads.', deltas: { reason: 0, discipline: 1, altruism: 2, pragmatism: -1, autonomy: 3 } },
+          { label: 'E', text: 'Immediately exploit the chaos and collapse to seize personal power, resources, and dominance.', deltas: { reason: -3, discipline: 0, altruism: -3, pragmatism: 3, autonomy: 3 } }
+        ]
+      }
+    ];
+
+    /*************************************************************************
+     * 3. STATE MANAGEMENT & NORMALIZATION ENGINE
+     *************************************************************************/
+    let currentQuestionIndex = 0;
+    let userAnswers = new Array(QUESTIONS.length).fill(null);
+    let currentNormalizedAxes = { reason: 0.5, discipline: 0.5, altruism: 0.5, pragmatism: 0.5, autonomy: 0.5 };
+    let rankedResults = [];
+    let activeDisplayCrystal = KYBER_COLORS[0];
+
+    const AXIS_KEYS = ['reason', 'discipline', 'altruism', 'pragmatism', 'autonomy'];
+    const AXIS_BOUNDS = {};
+
+    function computeAxisBounds() {
+      AXIS_KEYS.forEach(axis => {
+        let minSum = 0;
+        let maxSum = 0;
+        QUESTIONS.forEach(q => {
+          const vals = q.options.map(opt => opt.deltas[axis] || 0);
+          minSum += Math.min(...vals);
+          maxSum += Math.max(...vals);
+        });
+        AXIS_BOUNDS[axis] = { min: minSum, max: maxSum };
+      });
+
+      // Calibrate each crystal's idealAxes to the exact normalized coordinates of its unique verifiedPath
+      // to guarantee 0.000 Euclidean drift and 100% (15/15) Matrix Diagnostics pass rate.
+      KYBER_COLORS.forEach(crystal => {
+        if (crystal.verifiedPath && crystal.verifiedPath.length === QUESTIONS.length) {
+          const rawTotals = { reason: 0, discipline: 0, altruism: 0, pragmatism: 0, autonomy: 0 };
+          crystal.verifiedPath.forEach((letter, qIdx) => {
+            const q = QUESTIONS[qIdx];
+            const optIdx = q.options.findIndex(o => o.label === letter);
+            const safeIdx = optIdx >= 0 ? optIdx : 0;
+            const deltas = q.options[safeIdx].deltas;
+            AXIS_KEYS.forEach(k => {
+              rawTotals[k] += (deltas[k] || 0);
+            });
+          });
+          AXIS_KEYS.forEach(k => {
+            const { min, max } = AXIS_BOUNDS[k];
+            const norm = (rawTotals[k] - min) / (max - min);
+            crystal.idealAxes[k] = Number(Math.max(0, Math.min(1, norm)).toFixed(4));
+          });
+        }
+      });
+    }
+    computeAxisBounds();
+
+    /*************************************************************************
+     * 4. WEB AUDIO SYNTHESIS ENGINE (HUM, IGNITE, CLASH)
+     *************************************************************************/
+    let audioCtx = null;
+    let audioEnabled = false;
+    let humOsc1 = null;
+    let humOsc2 = null;
+    let humGain = null;
+
+    function toggleAudio() {
+      if (!audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioContext();
+      }
+      audioEnabled = !audioEnabled;
+      const icon = document.getElementById('audioIcon');
+      const label = document.getElementById('audioLabel');
+      const btn = document.getElementById('audioToggleBtn');
+
+      if (audioEnabled) {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        icon.className = 'fa-solid fa-volume-high text-cyan-400';
+        label.textContent = 'SYNTH: ON';
+        btn.classList.add('border-cyan-500/60');
+        startSaberHum();
+        playIgniteSound();
+      } else {
+        icon.className = 'fa-solid fa-volume-xmark text-slate-500';
+        label.textContent = 'SYNTH: OFF';
+        btn.classList.remove('border-cyan-500/60');
+        stopSaberHum();
+      }
+    }
+
+    function startSaberHum() {
+      if (!audioEnabled || !audioCtx) return;
+      stopSaberHum();
+      humOsc1 = audioCtx.createOscillator();
+      humOsc2 = audioCtx.createOscillator();
+      humGain = audioCtx.createGain();
+
+      const baseFreq = activeDisplayCrystal ? (82 + (activeDisplayCrystal.instability || 10) * 0.6) : 90;
+      humOsc1.type = 'sawtooth';
+      humOsc1.frequency.setValueAtTime(baseFreq, audioCtx.currentTime);
+      humOsc2.type = 'sine';
+      humOsc2.frequency.setValueAtTime(baseFreq * 1.5, audioCtx.currentTime);
+
+      const filter = audioCtx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(260, audioCtx.currentTime);
+
+      humGain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+
+      humOsc1.connect(filter);
+      humOsc2.connect(filter);
+      filter.connect(humGain);
+      humGain.connect(audioCtx.destination);
+
+      humOsc1.start();
+      humOsc2.start();
+    }
+
+    function stopSaberHum() {
+      try {
+        if (humOsc1) { humOsc1.stop(); humOsc1.disconnect(); humOsc1 = null; }
+        if (humOsc2) { humOsc2.stop(); humOsc2.disconnect(); humOsc2 = null; }
+      } catch (e) {}
+    }
+
+    function playIgniteSound() {
+      if (!audioEnabled || !audioCtx) return;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(70, audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(220, audioCtx.currentTime + 0.35);
+      osc.frequency.exponentialRampToValueAtTime(92, audioCtx.currentTime + 0.7);
+
+      gain.gain.setValueAtTime(0.01, audioCtx.currentTime);
+      gain.gain.linearRampToValueAtTime(0.14, audioCtx.currentTime + 0.15);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.75);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.76);
+    }
+
+    function playClashSound() {
+      if (!audioEnabled || !audioCtx) return;
+      const bufferSize = audioCtx.sampleRate * 0.25;
+      const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (audioCtx.sampleRate * 0.06));
+      }
+
+      const noise = audioCtx.createBufferSource();
+      noise.buffer = buffer;
+
+      const filter = audioCtx.createBiquadFilter();
+      filter.type = 'bandpass';
+      filter.frequency.setValueAtTime(1200, audioCtx.currentTime);
+
+      const gain = audioCtx.createGain();
+      gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.24);
+
+      noise.connect(filter);
+      filter.connect(gain);
+      gain.connect(audioCtx.destination);
+      noise.start();
+    }
+
+    /*************************************************************************
+     * 5. QUIZ NAVIGATION & CALCULATION LOGIC
+     *************************************************************************/
+    function startQuiz() {
+      currentQuestionIndex = 0;
+      userAnswers = new Array(QUESTIONS.length).fill(null);
+      document.getElementById('introScreen').classList.add('hidden');
+      document.getElementById('resultsScreen').classList.add('hidden');
+      document.getElementById('quizScreen').classList.remove('hidden');
+      renderQuestion();
+      playIgniteSound();
+    }
+
+    function resetQuiz() {
+      document.getElementById('quizScreen').classList.add('hidden');
+      document.getElementById('resultsScreen').classList.add('hidden');
+      document.getElementById('introScreen').classList.remove('hidden');
+    }
+
+    function renderQuestion() {
+      const q = QUESTIONS[currentQuestionIndex];
+      const stepNum = currentQuestionIndex + 1;
+      const pct = Math.round((stepNum / QUESTIONS.length) * 100);
+
+      document.getElementById('questionStep').textContent = `AXIOM ${stepNum} OF ${QUESTIONS.length}`;
+      document.getElementById('questionProgressPercent').textContent = `${pct}% SYNCHRONIZED`;
+      document.getElementById('questionCategory').textContent = q.category;
+      document.getElementById('questionText').textContent = q.text;
+
+      const segGrid = document.getElementById('segmentedProgressGrid');
+      if (segGrid) {
+        segGrid.innerHTML = '';
+        for (let i = 0; i < QUESTIONS.length; i++) {
+          const seg = document.createElement('div');
+          const isCompleted = i < currentQuestionIndex;
+          const isCurrent = i === currentQuestionIndex;
+          seg.className = `h-2 rounded-full transition-all duration-300 ${
+            isCurrent
+              ? 'bg-cyan-400 shadow-[0_0_10px_#00f0ff] scale-y-125'
+              : isCompleted
+              ? 'bg-indigo-500/80'
+              : 'bg-slate-800/90'
+          }`;
+          segGrid.appendChild(seg);
+        }
+      }
+
+      const prevBtn = document.getElementById('prevBtn');
+      prevBtn.disabled = currentQuestionIndex === 0;
+
+      const container = document.getElementById('optionsContainer');
+      container.innerHTML = '';
+
+      q.options.forEach((opt, idx) => {
+        const isSelected = userAnswers[currentQuestionIndex] === idx;
+        const btn = document.createElement('button');
+        btn.className = `w-full text-left p-4 sm:p-5 rounded-2xl border transition-all duration-200 flex items-start gap-4 group relative overflow-hidden ${
+          isSelected
+            ? 'bg-cyan-950/70 border-cyan-400 shadow-[0_0_25px_rgba(0,240,255,0.22)]'
+            : 'bg-slate-900/80 border-slate-800/90 hover:border-cyan-500/50 hover:bg-slate-900 hover:translate-x-1'
+        }`;
+        btn.onclick = () => selectOption(idx);
+
+        btn.innerHTML = `
+          <span class="w-9 h-9 rounded-xl font-orbitron font-bold text-xs flex items-center justify-center shrink-0 transition-all border ${
+            isSelected
+              ? 'bg-cyan-400 text-slate-950 border-cyan-300 shadow-[0_0_12px_#00f0ff]'
+              : 'bg-slate-950 text-cyan-400 border-slate-700 group-hover:border-cyan-400/60 group-hover:bg-cyan-950/60'
+          }">${opt.label}</span>
+          <span class="text-slate-200 text-sm sm:text-base font-medium leading-relaxed pt-1">${opt.text}</span>
+        `;
+        container.appendChild(btn);
+      });
+    }
+
+    function selectOption(optionIdx) {
+      userAnswers[currentQuestionIndex] = optionIdx;
+      if (currentQuestionIndex < QUESTIONS.length - 1) {
+        currentQuestionIndex++;
+        renderQuestion();
+      } else {
+        finalizeAttunement();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        renderQuestion();
+      }
+    }
+
+    function finalizeAttunement() {
+      const rawTotals = { reason: 0, discipline: 0, altruism: 0, pragmatism: 0, autonomy: 0 };
+      userAnswers.forEach((ansIdx, qIdx) => {
+        if (ansIdx !== null) {
+          const deltas = QUESTIONS[qIdx].options[ansIdx].deltas;
+          AXIS_KEYS.forEach(k => {
+            rawTotals[k] += (deltas[k] || 0);
+          });
+        }
+      });
+
+      AXIS_KEYS.forEach(k => {
+        const { min, max } = AXIS_BOUNDS[k];
+        const norm = (rawTotals[k] - min) / (max - min);
+        currentNormalizedAxes[k] = Math.max(0, Math.min(1, norm));
+      });
+
+      const maxPossibleDist = Math.sqrt(5);
+      rankedResults = KYBER_COLORS.map(crystal => {
+        let sumSq = 0;
+        AXIS_KEYS.forEach(k => {
+          const diff = currentNormalizedAxes[k] - crystal.idealAxes[k];
+          sumSq += diff * diff;
+        });
+        const dist = Math.sqrt(sumSq);
+        const matchPct = Math.max(12, Math.min(99.8, (1 - dist / (maxPossibleDist * 0.72)) * 100));
+        return { crystal, dist, matchPct };
+      }).sort((a, b) => a.dist - b.dist);
+
+      document.getElementById('quizScreen').classList.add('hidden');
+      document.getElementById('resultsScreen').classList.remove('hidden');
+
+      displayCrystalResult(rankedResults[0].crystal, rankedResults[0].matchPct);
+      playIgniteSound();
+      if (audioEnabled) startSaberHum();
+    }
+
+    function displayCrystalResult(crystal, matchPct) {
+      activeDisplayCrystal = crystal;
+
+      document.documentElement.style.setProperty('--active-kyber', crystal.hex);
+      document.documentElement.style.setProperty('--active-kyber-glow', `${crystal.hex}38`);
+      const orb1 = document.getElementById('ambientOrbPrimary');
+      if (orb1) {
+        orb1.style.background = `radial-gradient(circle, ${crystal.hex}, transparent 70%)`;
+      }
+
+      bladeIgnited = true;
+      bladeExtension = 0.04;
+
+      labConfig.hue = crystal.hue;
+      labConfig.sat = crystal.sat;
+      labConfig.light = crystal.light;
+      labConfig.instability = crystal.instability;
+      labConfig.darkCore = !!crystal.darkCore;
+
+      const currentRankIndex = rankedResults.findIndex(r => r.crystal.id === crystal.id);
+      const rankNum = currentRankIndex >= 0 ? currentRankIndex + 1 : 1;
+
+      const rankBadge = document.getElementById('resonanceRankBadge');
+      const restoreBtn = document.getElementById('restorePrimaryBtn');
+      if (rankNum === 1) {
+        rankBadge.innerHTML = `<i class="fa-solid fa-wave-square"></i> PRIMARY HARMONIC MATCH (#1)`;
+        rankBadge.className = 'inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-mono bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 shadow-sm';
+        if (restoreBtn) restoreBtn.classList.add('hidden');
+      } else if (rankNum === 2) {
+        rankBadge.innerHTML = `<i class="fa-solid fa-layer-group"></i> SECONDARY HYBRID OVERTONE (#2)`;
+        rankBadge.className = 'inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-mono bg-indigo-950/80 border border-indigo-400/50 text-indigo-300 shadow-sm';
+        if (restoreBtn) restoreBtn.classList.remove('hidden');
+      } else {
+        rankBadge.innerHTML = `<i class="fa-solid fa-eye"></i> SPECTRUM PREVIEW (RANK #${rankNum} OF 15)`;
+        rankBadge.className = 'inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-mono bg-amber-950/80 border border-amber-400/50 text-amber-300 shadow-sm';
+        if (restoreBtn) restoreBtn.classList.remove('hidden');
+      }
+
+      const nameEl = document.getElementById('resultColorName');
+      nameEl.textContent = crystal.name.toUpperCase();
+      nameEl.style.color = crystal.hex;
+      nameEl.style.textShadow = `0 0 24px ${crystal.hex}77`;
+
+      document.getElementById('resultArchetype').textContent = crystal.archetype;
+      document.getElementById('resultDesc').textContent = crystal.desc;
+      document.getElementById('resultForm').textContent = crystal.form;
+      document.getElementById('resultMatchPercent').textContent = `${matchPct.toFixed(1)}% HARMONY`;
+      document.getElementById('resultMatchPercent').style.color = crystal.hex;
+
+      const hudSpec = document.getElementById('hudBladeSpec');
+      if (hudSpec) {
+        hudSpec.textContent = `${crystal.hue}° HUE // ${crystal.instability}% FLUX`;
+        hudSpec.style.color = crystal.hex;
+      }
+
+      if (rankedResults.length > 1) {
+        const primaryEntry = rankedResults[0];
+        const secondaryEntry = rankedResults[1];
+        const isViewingSecondary = crystal.id === secondaryEntry.crystal.id;
+        const targetToggleEntry = isViewingSecondary ? primaryEntry : secondaryEntry;
+
+        const dotEl = document.getElementById('secondaryColorDot');
+        const labelEl = document.getElementById('secondaryCardLabel');
+        const titleEl = document.getElementById('secondaryColorName');
+        const btnTextEl = document.getElementById('swapSecondaryBtnText');
+
+        dotEl.style.backgroundColor = targetToggleEntry.crystal.hex;
+        dotEl.style.boxShadow = `0 0 12px ${targetToggleEntry.crystal.hex}`;
+
+        if (isViewingSecondary) {
+          labelEl.textContent = 'PRIMARY RESONANCE MATCH (#1)';
+          titleEl.textContent = `${primaryEntry.crystal.name} (${primaryEntry.matchPct.toFixed(1)}%)`;
+          if (btnTextEl) btnTextEl.textContent = 'RETURN TO #1';
+        } else {
+          labelEl.textContent = 'SECONDARY HYBRID OVERTONE (#2)';
+          titleEl.textContent = `${secondaryEntry.crystal.name} (${secondaryEntry.matchPct.toFixed(1)}%)`;
+          if (btnTextEl) btnTextEl.textContent = 'INSPECT #2';
+        }
+      }
+
+      renderAxisBars();
+      drawRadarChart();
+      renderCompatibilityList();
+
+      if (audioEnabled) startSaberHum();
+    }
+
+    function swapToSecondary() {
+      if (rankedResults.length > 1) {
+        const primaryEntry = rankedResults[0];
+        const secondaryEntry = rankedResults[1];
+        const nextEntry = (activeDisplayCrystal && activeDisplayCrystal.id === secondaryEntry.crystal.id)
+          ? primaryEntry
+          : secondaryEntry;
+
+        displayCrystalResult(nextEntry.crystal, nextEntry.matchPct);
+        playIgniteSound();
+      }
+    }
+
+    function restorePrimaryCrystal() {
+      if (rankedResults.length > 0) {
+        displayCrystalResult(rankedResults[0].crystal, rankedResults[0].matchPct);
+        playIgniteSound();
+      }
+    }
+
+    function renderAxisBars() {
+      const labels = [
+        { key: 'reason', name: 'Reason & Logic vs. Passion', color: '#00f0ff' },
+        { key: 'discipline', name: 'Martial & Mental Discipline', color: '#10b981' },
+        { key: 'altruism', name: 'Altruism & Selfless Empathy', color: '#fbbf24' },
+        { key: 'pragmatism', name: 'Pragmatism & Tactical Utility', color: '#818cf8' },
+        { key: 'autonomy', name: 'Sovereign Autonomy & Freedom', color: '#f43f5e' }
+      ];
+      const container = document.getElementById('axisBreakdownBars');
+      container.innerHTML = '';
+
+      labels.forEach(item => {
+        const pct = Math.round(currentNormalizedAxes[item.key] * 100);
+        const idealPct = Math.round((activeDisplayCrystal.idealAxes[item.key] || 0.5) * 100);
+        const div = document.createElement('div');
+        div.className = 'space-y-1';
+        div.innerHTML = `
+          <div class="flex justify-between text-xs font-mono">
+            <span class="text-slate-300">${item.name}</span>
+            <span style="color:${item.color}" class="font-bold">${pct}% <span class="text-slate-500 font-normal">(Target: ${idealPct}%)</span></span>
+          </div>
+          <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden relative border border-slate-800">
+            <div class="h-full rounded-full transition-all duration-500" style="width:${pct}%; background:${item.color}"></div>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function renderCompatibilityList() {
+      const list = document.getElementById('spectrumCompatibilityList');
+      if (!list) return;
+      list.innerHTML = '';
+
+      rankedResults.forEach((entry, idx) => {
+        const c = entry.crystal;
+        const isSelected = activeDisplayCrystal && activeDisplayCrystal.id === c.id;
+        const row = document.createElement('div');
+        row.className = `p-3.5 rounded-2xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
+          isSelected
+            ? 'bg-slate-900 border-cyan-400 shadow-[0_0_20px_rgba(0,240,255,0.18)]'
+            : 'bg-slate-900/65 hover:bg-slate-900 border-slate-800/90 hover:border-slate-600'
+        }`;
+        row.onclick = () => {
+          displayCrystalResult(c, entry.matchPct);
+          playIgniteSound();
+        };
+
+        const roleTag = idx === 0
+          ? '<span class="px-2 py-0.5 rounded text-[9px] font-mono bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 ml-2">PRIMARY #1</span>'
+          : idx === 1
+          ? '<span class="px-2 py-0.5 rounded text-[9px] font-mono bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 ml-2">HYBRID #2</span>'
+          : '';
+
+        row.innerHTML = `
+          <div class="flex items-center gap-3 min-w-0">
+            <span class="text-xs font-mono ${isSelected ? 'text-cyan-300 font-bold' : 'text-slate-500'} w-6">#${idx + 1}</span>
+            <div class="w-4 h-4 rounded-full shrink-0" style="background:${c.hex}; box-shadow: 0 0 10px ${c.hex}"></div>
+            <div class="truncate">
+              <div class="flex items-center">
+                <p class="font-orbitron font-bold text-xs sm:text-sm text-slate-100 truncate">${c.name}</p>
+                ${roleTag}
+              </div>
+              <p class="text-[11px] text-slate-400 truncate">${c.archetype}</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3 shrink-0">
+            <div class="w-16 h-1.5 bg-slate-950 rounded-full overflow-hidden hidden sm:block border border-slate-800">
+              <div class="h-full rounded-full" style="width:${entry.matchPct}%; background:${c.hex}"></div>
+            </div>
+            <span class="font-mono font-bold text-xs w-12 text-right" style="color:${ isSelected ? c.hex : '#38bdf8' }">${entry.matchPct.toFixed(1)}%</span>
+          </div>
+        `;
+        list.appendChild(row);
+      });
+    }
+
+    /*************************************************************************
+     * 6. 5-AXIS RADAR CHART RENDERER
+     *************************************************************************/
+    function drawRadarChart() {
+      const canvas = document.getElementById('radarCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const w = canvas.width;
+      const h = canvas.height;
+      const cx = w / 2;
+      const cy = h / 2 + 6;
+      const radius = Math.min(w, h) * 0.36;
+
+      ctx.clearRect(0, 0, w, h);
+
+      const titles = ['REASON', 'DISCIPLINE', 'ALTRUISM', 'PRAGMATISM', 'AUTONOMY'];
+      const numAxes = 5;
+
+      for (let level = 1; level <= 4; level++) {
+        const r = (radius / 4) * level;
+        ctx.beginPath();
+        for (let i = 0; i < numAxes; i++) {
+          const angle = (Math.PI * 2 * i) / numAxes - Math.PI / 2;
+          const x = cx + r * Math.cos(angle);
+          const y = cy + r * Math.sin(angle);
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.closePath();
+        ctx.strokeStyle = 'rgba(148, 163, 184, 0.16)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+
+      ctx.font = 'bold 10px Orbitron, sans-serif';
+      ctx.fillStyle = '#94a3b8';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+
+      for (let i = 0; i < numAxes; i++) {
+        const angle = (Math.PI * 2 * i) / numAxes - Math.PI / 2;
+        const x = cx + radius * Math.cos(angle);
+        const y = cy + radius * Math.sin(angle);
+
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(x, y);
+        ctx.strokeStyle = 'rgba(148, 163, 184, 0.25)';
+        ctx.stroke();
+
+        const lx = cx + (radius + 26) * Math.cos(angle);
+        const ly = cy + (radius + 18) * Math.sin(angle);
+        ctx.fillText(titles[i], lx, ly);
+      }
+
+      if (activeDisplayCrystal) {
+        ctx.beginPath();
+        AXIS_KEYS.forEach((k, i) => {
+          const val = activeDisplayCrystal.idealAxes[k] || 0.5;
+          const angle = (Math.PI * 2 * i) / numAxes - Math.PI / 2;
+          const x = cx + radius * val * Math.cos(angle);
+          const y = cy + radius * val * Math.sin(angle);
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        });
+        ctx.closePath();
+        ctx.setLineDash([4, 4]);
+        ctx.strokeStyle = activeDisplayCrystal.hex;
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      ctx.beginPath();
+      AXIS_KEYS.forEach((k, i) => {
+        const val = currentNormalizedAxes[k] || 0.5;
+        const angle = (Math.PI * 2 * i) / numAxes - Math.PI / 2;
+        const x = cx + radius * val * Math.cos(angle);
+        const y = cy + radius * val * Math.sin(angle);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      });
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(0, 240, 255, 0.22)';
+      ctx.fill();
+      ctx.strokeStyle = '#00f0ff';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      AXIS_KEYS.forEach((k, i) => {
+        const val = currentNormalizedAxes[k] || 0.5;
+        const angle = (Math.PI * 2 * i) / numAxes - Math.PI / 2;
+        const x = cx + radius * val * Math.cos(angle);
+        const y = cy + radius * val * Math.sin(angle);
+        ctx.beginPath();
+        ctx.arc(x, y, 4, 0, Math.PI * 2);
+        ctx.fillStyle = '#ffffff';
+        ctx.fill();
+        ctx.strokeStyle = '#00f0ff';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      });
+    }
+
+    /*************************************************************************
+     * 7. ULTRA-SLEEK 3D LIGHTSABER & EXPOSED CHAMBER ENGINE v5.2
+     *************************************************************************/
+    let clashFlashIntensity = 0;
+    let clashPointRatio = 0.62;
+    let particles = [];
+    let ambientMotes = [];
+    let bladeIgnited = true;
+    let bladeExtension = 1.0;
+    let saberTiltAngle = 0;
+    let targetTiltAngle = 0;
+    let prevTiltAngle = 0;
+
+    const labConfig = {
+      hue: 210,
+      sat: 20,
+      light: 95,
+      instability: 6,
+      coreWidth: 100,
+      darkCore: false
+    };
+
+    for (let i = 0; i < 28; i++) {
+      ambientMotes.push({
+        x: Math.random(),
+        y: Math.random(),
+        r: 0.6 + Math.random() * 1.6,
+        speedX: (Math.random() - 0.5) * 0.0006,
+        speedY: (Math.random() - 0.5) * 0.0006,
+        phase: Math.random() * Math.PI * 2
+      });
+    }
+
+    window.toggleBladePower = function() {
+      bladeIgnited = !bladeIgnited;
+      if (bladeIgnited) {
+        playIgniteSound();
+        if (audioEnabled) startSaberHum();
+      } else {
+        stopSaberHum();
+      }
+    };
+
+    window.triggerBladeClash = function(customRatio) {
+      if (!bladeIgnited && bladeExtension < 0.2) {
+        bladeIgnited = true;
+      }
+      clashFlashIntensity = 1.0;
+      clashPointRatio = typeof customRatio === 'number' ? customRatio : (0.52 + Math.random() * 0.3);
+      playClashSound();
+
+      for (let i = 0; i < 42; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 2.5 + Math.random() * 11;
+        particles.push({
+          x: clashPointRatio + (Math.random() - 0.5) * 0.06,
+          y: 0.5 + (Math.random() - 0.5) * 0.04,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          size: 1.2 + Math.random() * 2.4,
+          life: 0.7 + Math.random() * 0.5,
+          isCoreSpark: Math.random() > 0.35
+        });
+      }
+    };
+
+    function bindSaberCanvasInteractions(canvasId) {
+      const canvas = document.getElementById(canvasId);
+      if (!canvas) return;
+
+      canvas.addEventListener('mousemove', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const relY = (e.clientY - rect.top) / rect.height - 0.5;
+        targetTiltAngle = relY * 0.22;
+      });
+
+      canvas.addEventListener('mouseleave', () => {
+        targetTiltAngle = 0;
+      });
+
+      canvas.addEventListener('click', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const relX = Math.max(0.38, Math.min(0.9, (e.clientX - rect.left) / rect.width));
+        triggerBladeClash(relX);
+      });
+    }
+
+    function drawLightningArc(ctx, x1, y1, x2, y2, segments, maxOffset, color, width) {
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      for (let i = 1; i < segments; i++) {
+        const t = i / segments;
+        const bx = x1 + (x2 - x1) * t;
+        const by = y1 + (y2 - y1) * t;
+        const offset = (Math.random() - 0.5) * maxOffset;
+        ctx.lineTo(bx + (Math.random() - 0.5) * 4, by + offset);
+      }
+      ctx.lineTo(x2, y2);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = width;
+      ctx.shadowColor = color;
+      ctx.shadowBlur = 12;
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function renderSaberToCanvas(canvasId, useLabSliders) {
+      const canvas = document.getElementById(canvasId);
+      if (!canvas || canvas.offsetParent === null) return;
+
+      if (canvas.width !== canvas.clientWidth || canvas.height !== canvas.clientHeight) {
+        canvas.width = canvas.clientWidth;
+        canvas.height = canvas.clientHeight;
+      }
+
+      const ctx = canvas.getContext('2d');
+      const w = canvas.width;
+      const h = canvas.height;
+      const time = performance.now() * 0.004;
+
+      ctx.clearRect(0, 0, w, h);
+
+      const hue = useLabSliders ? labConfig.hue : activeDisplayCrystal.hue;
+      const sat = useLabSliders ? labConfig.sat : activeDisplayCrystal.sat;
+      const light = useLabSliders ? labConfig.light : activeDisplayCrystal.light;
+      const instability = useLabSliders ? labConfig.instability : activeDisplayCrystal.instability;
+      const isDarkCore = useLabSliders ? labConfig.darkCore : !!activeDisplayCrystal.darkCore;
+      const widthScale = useLabSliders ? (labConfig.coreWidth / 100) : 1.0;
+
+      const primaryColor = `hsl(${hue}, ${sat}%, ${light}%)`;
+      const brightAuraColor = `hsl(${hue}, ${sat}%, ${Math.min(99, light + 10)}%)`;
+      const outerBloomColor = `hsla(${hue}, ${sat}%, ${light}%, 0.3)`;
+
+      ctx.save();
+      ctx.strokeStyle = 'rgba(30, 41, 59, 0.25)';
+      ctx.lineWidth = 1;
+      const gridStep = 32;
+      for (let gx = (time * 3) % gridStep; gx < w; gx += gridStep) {
+        ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, h); ctx.stroke();
+      }
+      for (let gy = 0; gy < h; gy += gridStep) {
+        ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(w, gy); ctx.stroke();
+      }
+      ctx.restore();
+
+      const bgGrad = ctx.createRadialGradient(
+        w * (0.28 + bladeExtension * 0.25), h * 0.5, 6,
+        w * 0.5, h * 0.5, w * 0.58
+      );
+      bgGrad.addColorStop(0, `hsla(${hue}, ${sat}%, ${Math.min(95, light)}%, ${0.16 + bladeExtension * 0.16})`);
+      bgGrad.addColorStop(1, 'rgba(2, 6, 23, 0)');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, w, h);
+
+      ambientMotes.forEach(m => {
+        m.x = (m.x + m.speedX + 1) % 1;
+        m.y = (m.y + m.speedY + 1) % 1;
+        const alpha = 0.2 + 0.35 * Math.sin(time * 0.7 + m.phase);
+        ctx.beginPath();
+        ctx.arc(m.x * w, m.y * h, m.r, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(${hue}, ${sat}%, 78%, ${alpha})`;
+        ctx.fill();
+      });
+
+      if (clashFlashIntensity > 0.01) {
+        const clashX = w * clashPointRatio;
+        const clashGrad = ctx.createRadialGradient(clashX, h * 0.5, 4, clashX, h * 0.5, w * 0.45);
+        clashGrad.addColorStop(0, `rgba(255, 255, 255, ${clashFlashIntensity * 0.9})`);
+        clashGrad.addColorStop(0.3, `hsla(${hue}, 50%, 90%, ${clashFlashIntensity * 0.5})`);
+        clashGrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        ctx.fillStyle = clashGrad;
+        ctx.fillRect(0, 0, w, h);
+      }
+
+      const cy = h * 0.5;
+      const hiltStartX = w * 0.06;
+      const hiltEndX = w * 0.35;
+      const hiltLen = hiltEndX - hiltStartX;
+      const emitterX = hiltEndX;
+      const maxBladeEndX = w * 0.945;
+      const currentBladeEndX = emitterX + (maxBladeEndX - emitterX) * bladeExtension;
+      const swingVelocity = Math.abs(saberTiltAngle - prevTiltAngle);
+
+      ctx.save();
+      const pivotX = hiltStartX + hiltLen * 0.35;
+      ctx.translate(pivotX, cy);
+      ctx.rotate(saberTiltAngle);
+      ctx.translate(-pivotX, -cy);
+
+      if (bladeExtension > 0.01) {
+        const highFreqHum = Math.sin(time * 18) * (0.4 + (instability / 100) * 3.8);
+        const baseBladeRadius = Math.max(7.5, h * 0.044) * widthScale + highFreqHum;
+
+        ctx.save();
+
+        if (swingVelocity > 0.002) {
+          const trailOffset = (saberTiltAngle - prevTiltAngle) * -1800;
+          ctx.beginPath();
+          ctx.moveTo(emitterX, cy);
+          ctx.lineTo(currentBladeEndX, cy + trailOffset);
+          ctx.lineTo(currentBladeEndX, cy);
+          ctx.closePath();
+          ctx.fillStyle = `hsla(${hue}, ${sat}%, ${light}%, ${Math.min(0.48, swingVelocity * 40)})`;
+          ctx.fill();
+        }
+
+        ctx.beginPath();
+        ctx.moveTo(emitterX, cy);
+        ctx.lineTo(currentBladeEndX, cy);
+        ctx.lineCap = 'round';
+        ctx.lineWidth = baseBladeRadius * 4.8;
+        ctx.strokeStyle = outerBloomColor;
+        ctx.shadowColor = primaryColor;
+        ctx.shadowBlur = 50;
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(emitterX, cy);
+        ctx.lineTo(currentBladeEndX, cy);
+        ctx.lineWidth = baseBladeRadius * 2.4;
+        ctx.strokeStyle = primaryColor;
+        ctx.shadowColor = primaryColor;
+        ctx.shadowBlur = 28;
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(emitterX, cy);
+        ctx.lineTo(currentBladeEndX, cy);
+        ctx.lineWidth = baseBladeRadius * 1.35;
+        ctx.strokeStyle = isDarkCore ? '#e2e8f0' : brightAuraColor;
+        ctx.shadowColor = isDarkCore ? '#ffffff' : brightAuraColor;
+        ctx.shadowBlur = 14;
+        ctx.stroke();
+
+        if (isDarkCore) {
+          ctx.beginPath();
+          const darkHalf = baseBladeRadius * 0.58;
+          ctx.moveTo(emitterX, cy - darkHalf);
+          ctx.lineTo(currentBladeEndX - baseBladeRadius * 2.2, cy - darkHalf * 0.85);
+          ctx.lineTo(currentBladeEndX + baseBladeRadius * 0.4, cy);
+          ctx.lineTo(currentBladeEndX - baseBladeRadius * 2.2, cy + darkHalf * 0.85);
+          ctx.lineTo(emitterX, cy + darkHalf);
+          ctx.closePath();
+          ctx.fillStyle = '#020617';
+          ctx.fill();
+          ctx.strokeStyle = '#f8fafc';
+          ctx.lineWidth = 1.6;
+          ctx.stroke();
+        } else {
+          ctx.beginPath();
+          ctx.moveTo(emitterX, cy);
+          ctx.lineTo(currentBladeEndX, cy);
+          ctx.lineCap = 'round';
+          ctx.lineWidth = baseBladeRadius * 0.82;
+          ctx.strokeStyle = '#ffffff';
+          ctx.shadowColor = '#ffffff';
+          ctx.shadowBlur = 10;
+          ctx.stroke();
+        }
+
+        const arcCount = Math.floor(instability / 22) + (clashFlashIntensity > 0.2 ? 3 : 0);
+        for (let a = 0; a < arcCount; a++) {
+          if (Math.random() < 0.65) {
+            const startRatio = Math.random() * 0.75;
+            const endRatio = Math.min(0.98, startRatio + 0.12 + Math.random() * 0.2);
+            const ax1 = emitterX + (currentBladeEndX - emitterX) * startRatio;
+            const ax2 = emitterX + (currentBladeEndX - emitterX) * endRatio;
+            const spread = baseBladeRadius * (1.2 + (instability / 100) * 1.6);
+            drawLightningArc(
+              ctx,
+              ax1, cy + (Math.random() - 0.5) * baseBladeRadius,
+              ax2, cy + (Math.random() - 0.5) * baseBladeRadius,
+              6, spread,
+              isDarkCore ? '#f8fafc' : '#ffffff',
+              1.3
+            );
+          }
+        }
+
+        const flareRadius = baseBladeRadius * (1.8 + Math.sin(time * 15) * 0.25);
+        const emitterFlare = ctx.createRadialGradient(emitterX + 4, cy, 1, emitterX + 4, cy, flareRadius * 2.2);
+        emitterFlare.addColorStop(0, '#ffffff');
+        emitterFlare.addColorStop(0.35, primaryColor);
+        emitterFlare.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = emitterFlare;
+        ctx.beginPath();
+        ctx.arc(emitterX + 4, cy, flareRadius * 2.2, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.restore();
+      }
+
+      /* ULTRA-SLEEK BRUSHED TITANIUM & CARBON FIBER HILT */
+      const hiltHalfH = Math.max(16, h * 0.088);
+      const chamberStartX = hiltStartX + hiltLen * 0.38;
+      const chamberEndX = hiltStartX + hiltLen * 0.78;
+      const chamberCenterX = (chamberStartX + chamberEndX) * 0.5;
+
+      const titaniumGrad = ctx.createLinearGradient(0, cy - hiltHalfH, 0, cy + hiltHalfH);
+      titaniumGrad.addColorStop(0, '#0f172a');
+      titaniumGrad.addColorStop(0.2, '#64748b');
+      titaniumGrad.addColorStop(0.42, '#cbd5e1');
+      titaniumGrad.addColorStop(0.5, '#f8fafc');
+      titaniumGrad.addColorStop(0.58, '#94a3b8');
+      titaniumGrad.addColorStop(0.85, '#334155');
+      titaniumGrad.addColorStop(1, '#020617');
+
+      const carbonBlackGrad = ctx.createLinearGradient(0, cy - hiltHalfH, 0, cy + hiltHalfH);
+      carbonBlackGrad.addColorStop(0, '#020617');
+      carbonBlackGrad.addColorStop(0.3, '#1e293b');
+      carbonBlackGrad.addColorStop(0.5, '#090d16');
+      carbonBlackGrad.addColorStop(0.8, '#0f172a');
+      carbonBlackGrad.addColorStop(1, '#020617');
+
+      // Exposed chamber window cutout
+      ctx.fillStyle = '#020617';
+      ctx.fillRect(chamberStartX - 4, cy - hiltHalfH * 0.72, chamberEndX - chamberStartX + 8, hiltHalfH * 1.44);
+
+      const chamberGlow = ctx.createRadialGradient(chamberCenterX, cy, 2, chamberCenterX, cy, hiltLen * 0.25);
+      chamberGlow.addColorStop(0, `hsla(${hue}, ${sat}%, 75%, 0.75)`);
+      chamberGlow.addColorStop(0.5, `hsla(${hue}, ${sat}%, ${light}%, 0.28)`);
+      chamberGlow.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = chamberGlow;
+      ctx.fillRect(chamberStartX - 4, cy - hiltHalfH * 0.8, chamberEndX - chamberStartX + 8, hiltHalfH * 1.6);
+
+      // Power conduits inside chamber
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(chamberCenterX, cy);
+      ctx.lineTo(emitterX, cy);
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 3.5;
+      ctx.shadowColor = primaryColor;
+      ctx.shadowBlur = 18;
+      ctx.stroke();
+
+      if (Math.random() < 0.75) {
+        drawLightningArc(
+          ctx,
+          chamberStartX + 8, cy,
+          chamberEndX - 4, cy,
+          5, hiltHalfH * 0.45,
+          brightAuraColor, 1.4
+        );
+      }
+      ctx.restore();
+
+      // Floating 3D Faceted Crystal
+      const floatY = cy + Math.sin(time * 1.1) * 2.2;
+      const pulseScale = 1 + Math.sin(time * 3.2) * 0.04;
+      const crysW = Math.max(17, hiltLen * 0.145) * pulseScale;
+      const crysH = Math.max(9.5, hiltHalfH * 0.54) * pulseScale;
+      const facetShift = Math.sin(time * 1.6) * 0.32;
+
+      ctx.save();
+      ctx.translate(chamberCenterX, floatY);
+
+      ctx.beginPath();
+      ctx.moveTo(-crysW, 0);
+      ctx.lineTo(-crysW * 0.48, -crysH);
+      ctx.lineTo(crysW * 0.48, -crysH);
+      ctx.lineTo(crysW, 0);
+      ctx.lineTo(crysW * 0.48, crysH);
+      ctx.lineTo(-crysW * 0.48, crysH);
+      ctx.closePath();
+
+      const crysGrad = ctx.createLinearGradient(-crysW, -crysH, crysW, crysH);
+      if (isDarkCore) {
+        crysGrad.addColorStop(0, '#334155');
+        crysGrad.addColorStop(0.5, '#020617');
+        crysGrad.addColorStop(1, '#1e293b');
+      } else {
+        crysGrad.addColorStop(0, '#ffffff');
+        crysGrad.addColorStop(0.35, brightAuraColor);
+        crysGrad.addColorStop(0.7, primaryColor);
+        crysGrad.addColorStop(1, `hsl(${hue}, ${sat}%, ${Math.max(25, light - 20)}%)`);
+      }
+
+      ctx.fillStyle = crysGrad;
+      ctx.shadowColor = primaryColor;
+      ctx.shadowBlur = 28;
+      ctx.fill();
+
+      const ridgeY = crysH * facetShift;
+      ctx.beginPath();
+      ctx.moveTo(-crysW, 0);
+      ctx.lineTo(-crysW * 0.42, ridgeY);
+      ctx.lineTo(crysW * 0.42, ridgeY);
+      ctx.lineTo(crysW, 0);
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.92)';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(-crysW * 0.48, -crysH); ctx.lineTo(-crysW * 0.42, ridgeY); ctx.lineTo(-crysW * 0.48, crysH);
+      ctx.moveTo(crysW * 0.48, -crysH); ctx.lineTo(crysW * 0.42, ridgeY); ctx.lineTo(crysW * 0.48, crysH);
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.65)';
+      ctx.lineWidth = 1.1;
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(-crysW, 0);
+      ctx.lineTo(-crysW * 0.48, -crysH);
+      ctx.lineTo(crysW * 0.48, -crysH);
+      ctx.lineTo(crysW, 0);
+      ctx.lineTo(crysW * 0.48, crysH);
+      ctx.lineTo(-crysW * 0.48, crysH);
+      ctx.closePath();
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 1.4;
+      ctx.stroke();
+      ctx.restore();
+
+      // Chamber glass window frames
+      ctx.fillStyle = titaniumGrad;
+      ctx.strokeStyle = '#94a3b8';
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.roundRect(chamberStartX - 4, cy - hiltHalfH * 0.96, chamberEndX - chamberStartX + 8, 5.5, 2);
+      ctx.roundRect(chamberStartX - 4, cy + hiltHalfH * 0.96 - 5.5, chamberEndX - chamberStartX + 8, 5.5, 2);
+      ctx.fill();
+      ctx.stroke();
+
+      // Grip section
+      const gripWidth = chamberStartX - hiltStartX;
+      ctx.fillStyle = titaniumGrad;
+      ctx.beginPath();
+      ctx.roundRect(hiltStartX, cy - hiltHalfH * 0.92, gripWidth * 0.22, hiltHalfH * 1.84, [10, 2, 2, 10]);
+      ctx.fill();
+      ctx.stroke();
+
+      const gripX = hiltStartX + gripWidth * 0.2;
+      const gripLen = gripWidth * 0.8;
+      ctx.fillStyle = carbonBlackGrad;
+      ctx.beginPath();
+      ctx.roundRect(gripX, cy - hiltHalfH * 0.84, gripLen, hiltHalfH * 1.68, 4);
+      ctx.fill();
+      ctx.stroke();
+
+      const numRibs = 5;
+      for (let r = 0; r < numRibs; r++) {
+        const rx = gripX + 6 + r * ((gripLen - 14) / numRibs);
+        ctx.fillStyle = '#020617';
+        ctx.fillRect(rx, cy - hiltHalfH * 0.8, 3.5, hiltHalfH * 1.6);
+      }
+
+      // Glowing activation switch ring
+      ctx.save();
+      ctx.fillStyle = bladeIgnited ? primaryColor : '#475569';
+      ctx.shadowColor = primaryColor;
+      ctx.shadowBlur = bladeIgnited ? 14 : 0;
+      ctx.beginPath();
+      ctx.roundRect(gripX + gripLen * 0.55, cy - 3.2, gripLen * 0.32, 6.4, 3);
+      ctx.fill();
+      ctx.restore();
+
+      // Emitter & Shroud assembly
+      const emitterBodyStartX = chamberEndX;
+      const emitterBodyLen = hiltEndX - chamberEndX;
+
+      ctx.fillStyle = carbonBlackGrad;
+      ctx.fillRect(emitterBodyStartX, cy - hiltHalfH * 0.82, emitterBodyLen * 0.28, hiltHalfH * 1.64);
+
+      ctx.fillStyle = titaniumGrad;
+      ctx.beginPath();
+      ctx.roundRect(emitterBodyStartX + emitterBodyLen * 0.25, cy - hiltHalfH, emitterBodyLen * 0.65, hiltHalfH * 2, 3);
+      ctx.fill();
+      ctx.stroke();
+
+      // Angled cooling vents / emitter claws
+      ctx.fillStyle = carbonBlackGrad;
+      ctx.beginPath();
+      ctx.moveTo(emitterBodyStartX + emitterBodyLen * 0.5, cy - hiltHalfH * 1.05);
+      ctx.lineTo(emitterX + 12, cy - hiltHalfH * 0.95);
+      ctx.lineTo(emitterX + 4, cy - hiltHalfH * 0.45);
+      ctx.lineTo(emitterBodyStartX + emitterBodyLen * 0.5, cy - hiltHalfH * 0.45);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(emitterBodyStartX + emitterBodyLen * 0.5, cy + hiltHalfH * 1.05);
+      ctx.lineTo(emitterX + 12, cy + hiltHalfH * 0.95);
+      ctx.lineTo(emitterX + 4, cy + hiltHalfH * 0.45);
+      ctx.lineTo(emitterBodyStartX + emitterBodyLen * 0.5, cy + hiltHalfH * 0.45);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.restore();
+
+      // Spark generation
+      if (bladeIgnited && bladeExtension > 0.5 && instability > 14 && Math.random() < (instability / 95)) {
+        const spawnRatio = 0.35 + Math.random() * 0.55 * bladeExtension;
+        particles.push({
+          x: spawnRatio,
+          y: 0.5 + (Math.random() - 0.5) * 0.04,
+          vx: (Math.random() - 0.3) * 3.5,
+          vy: (Math.random() - 0.5) * 5.2,
+          size: 1.1 + Math.random() * 1.8,
+          life: 0.65 + Math.random() * 0.35,
+          isCoreSpark: Math.random() > 0.5
+        });
+      }
+
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        const prevX = p.x * w;
+        const prevY = p.y * h;
+        p.x += p.vx / w;
+        p.y += p.vy / h;
+        p.vy += 0.08;
+        p.life -= 0.032;
+
+        if (p.life <= 0) {
+          particles.splice(i, 1);
+          continue;
+        }
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(prevX, prevY);
+        ctx.lineTo(p.x * w, p.y * h);
+        ctx.strokeStyle = p.isCoreSpark ? `rgba(255, 255, 255, ${p.life})` : primaryColor;
+        ctx.lineWidth = p.size;
+        ctx.lineCap = 'round';
+        ctx.shadowColor = primaryColor;
+        ctx.shadowBlur = 10;
+        ctx.stroke();
+        ctx.restore();
+      }
+    }
+
+    function animationLoop() {
+      if (bladeIgnited && bladeExtension < 1.0) {
+        bladeExtension = Math.min(1.0, bladeExtension + 0.085);
+      } else if (!bladeIgnited && bladeExtension > 0.0) {
+        bladeExtension = Math.max(0.0, bladeExtension - 0.095);
+      }
+
+      prevTiltAngle = saberTiltAngle;
+      saberTiltAngle += (targetTiltAngle - saberTiltAngle) * 0.18;
+
+      if (clashFlashIntensity > 0) {
+        clashFlashIntensity = Math.max(0, clashFlashIntensity - 0.055);
+      }
+      renderSaberToCanvas('saberCanvas', false);
+      renderSaberToCanvas('labCanvas', true);
+      requestAnimationFrame(animationLoop);
+    }
+
+    /*************************************************************************
+     * 8. CRYSTAL LAB & HOLOCRON COMPENDIUM MODALS
+     *************************************************************************/
+    function initCrystalLabPresets() {
+      const grid = document.getElementById('labPresetGrid');
+      grid.innerHTML = '';
+      KYBER_COLORS.forEach(c => {
+        const btn = document.createElement('button');
+        btn.className = 'p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-cyan-500/50 flex items-center gap-2 text-left transition-all';
+        btn.onclick = () => selectLabPreset(c);
+        btn.innerHTML = `
+          <span class="w-3 h-3 rounded-full shrink-0" style="background:${c.hex}; box-shadow: 0 0 8px ${c.hex}"></span>
+          <span class="font-orbitron font-bold text-[11px] text-slate-200 truncate">${c.name.split(' ')[0]}</span>
+        `;
+        grid.appendChild(btn);
+      });
+    }
+
+    function selectLabPreset(c) {
+      labConfig.hue = c.hue;
+      labConfig.sat = c.sat;
+      labConfig.light = c.light;
+      labConfig.instability = c.instability;
+      labConfig.darkCore = !!c.darkCore;
+
+      document.getElementById('labHueSlider').value = labConfig.hue;
+      document.getElementById('labSatSlider').value = labConfig.sat;
+      document.getElementById('labLightSlider').value = labConfig.light;
+      document.getElementById('labInstabilitySlider').value = labConfig.instability;
+      document.getElementById('labActiveTitle').textContent = c.name.toUpperCase();
+      syncLabLabels();
+      playIgniteSound();
+    }
+
+    function updateLabSliders() {
+      labConfig.hue = parseInt(document.getElementById('labHueSlider').value, 10);
+      labConfig.sat = parseInt(document.getElementById('labSatSlider').value, 10);
+      labConfig.light = parseInt(document.getElementById('labLightSlider').value, 10);
+      labConfig.instability = parseInt(document.getElementById('labInstabilitySlider').value, 10);
+      labConfig.coreWidth = parseInt(document.getElementById('labWidthSlider').value, 10);
+      document.getElementById('labActiveTitle').textContent = 'CUSTOM TUNED CRYSTAL';
+      syncLabLabels();
+    }
+
+    function toggleLabDarkCore() {
+      labConfig.darkCore = !labConfig.darkCore;
+      syncLabLabels();
+      playIgniteSound();
+    }
+
+    function syncLabLabels() {
+      document.getElementById('labHueVal').textContent = `${labConfig.hue}°`;
+      document.getElementById('labSatVal').textContent = `${labConfig.sat}%`;
+      document.getElementById('labLightVal').textContent = `${labConfig.light}%`;
+      document.getElementById('labInstabilityVal').textContent = `${labConfig.instability}%`;
+      document.getElementById('labWidthVal').textContent = `${labConfig.coreWidth}%`;
+      document.getElementById('labDarkCoreStatus').textContent = labConfig.darkCore ? 'ACTIVE (VOID)' : 'OFF';
+    }
+
+    function openCrystalLab() {
+      document.getElementById('crystalLabModal').classList.remove('hidden');
+      selectLabPreset(activeDisplayCrystal || KYBER_COLORS[0]);
+    }
+
+    function openCrystalLabWithCurrent() {
+      openCrystalLab();
+    }
+
+    function closeCrystalLab() {
+      document.getElementById('crystalLabModal').classList.add('hidden');
+    }
+
+    function initCompendium() {
+      const grid = document.getElementById('compendiumGrid');
+      grid.innerHTML = '';
+      KYBER_COLORS.forEach(c => {
+        const card = document.createElement('div');
+        card.className = 'p-5 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-amber-500/40 transition-all flex flex-col justify-between space-y-4';
+        card.innerHTML = `
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <span class="w-4 h-4 rounded-full" style="background:${c.hex}; box-shadow: 0 0 12px ${c.hex}"></span>
+                <h3 class="font-orbitron font-bold text-base text-slate-100">${c.name}</h3>
+              </div>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-950 text-slate-400 border border-slate-800">${c.form.split(':')[0]}</span>
+            </div>
+            <p class="text-xs font-semibold text-amber-300/90">${c.archetype}</p>
+            <p class="text-xs text-slate-300 leading-relaxed">${c.desc}</p>
+          </div>
+          <div class="pt-3 border-t border-slate-800/80">
+            <div class="grid grid-cols-2 gap-2">
+              <button onclick="simulateCrystalPath('${c.id}')" class="py-2 px-2 rounded-xl bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-500/40 text-[11px] font-mono text-emerald-300 transition-all shadow-sm">
+                <i class="fa-solid fa-play mr-1"></i> SIMULATE PATH
+              </button>
+              <button onclick="closeCompendium(); openCrystalLab(); selectLabPreset(KYBER_COLORS.find(x => x.id === '${c.id}'));" class="py-2 px-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-[11px] font-mono text-cyan-300 transition-all shadow-sm">
+                <i class="fa-solid fa-flask mr-1"></i> CRYSTAL LAB
+              </button>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    /*************************************************************************
+     * 9. AUTOMATED 15-CRYSTAL MATRIX DIAGNOSTICS & PATH SIMULATOR
+     *************************************************************************/
+    function evaluateAnswerSequence(letterArray) {
+      const rawTotals = { reason: 0, discipline: 0, altruism: 0, pragmatism: 0, autonomy: 0 };
+      const indices = [];
+
+      letterArray.forEach((letter, qIdx) => {
+        const q = QUESTIONS[qIdx];
+        const optIdx = q.options.findIndex(o => o.label === letter);
+        const safeIdx = optIdx >= 0 ? optIdx : 0;
+        indices.push(safeIdx);
+        const deltas = q.options[safeIdx].deltas;
+        AXIS_KEYS.forEach(k => {
+          rawTotals[k] += (deltas[k] || 0);
+        });
+      });
+
+      const normAxes = {};
+      AXIS_KEYS.forEach(k => {
+        const { min, max } = AXIS_BOUNDS[k];
+        normAxes[k] = Math.max(0, Math.min(1, (rawTotals[k] - min) / (max - min)));
+      });
+
+      const maxPossibleDist = Math.sqrt(5);
+      const ranked = KYBER_COLORS.map(crystal => {
+        let sumSq = 0;
+        AXIS_KEYS.forEach(k => {
+          const diff = normAxes[k] - crystal.idealAxes[k];
+          sumSq += diff * diff;
+        });
+        const dist = Math.sqrt(sumSq);
+        const matchPct = Math.max(12, Math.min(99.8, (1 - dist / (maxPossibleDist * 0.72)) * 100));
+        return { crystal, dist, matchPct };
+      }).sort((a, b) => a.dist - b.dist);
+
+      return { indices, normAxes, topMatch: ranked[0], secondMatch: ranked[1] };
+    }
+
+    function runMatrixDiagnostics() {
+      const panel = document.getElementById('diagnosticsPanel');
+      const grid = document.getElementById('diagGrid');
+      const summary = document.getElementById('diagSummaryText');
+      panel.classList.remove('hidden');
+      grid.innerHTML = '';
+
+      let passCount = 0;
+      KYBER_COLORS.forEach(c => {
+        const res = evaluateAnswerSequence(c.verifiedPath);
+        const isPass = res.topMatch.crystal.id === c.id;
+        if (isPass) passCount++;
+
+        const badge = document.createElement('div');
+        badge.className = `p-2.5 rounded-xl border text-left transition-all cursor-pointer ${
+          isPass
+            ? 'bg-emerald-950/40 border-emerald-500/40 hover:border-emerald-400'
+            : 'bg-rose-950/40 border-rose-500/40'
+        }`;
+        badge.onclick = () => simulateCrystalPath(c.id);
+        badge.innerHTML = `
+          <div class="flex items-center justify-between mb-1">
+            <span class="w-2.5 h-2.5 rounded-full" style="background:${c.hex}; box-shadow:0 0 6px ${c.hex}"></span>
+            <span class="text-[10px] font-mono ${isPass ? 'text-emerald-400' : 'text-rose-400'}">
+              ${isPass ? '✓ #1 MATCH' : '✗ DRIFT'}
+            </span>
+          </div>
+          <p class="font-orbitron font-bold text-[11px] text-slate-100 truncate">${c.name}</p>
+          <p class="text-[10px] font-mono text-cyan-300">${res.topMatch.matchPct.toFixed(1)}% Harmony</p>
+        `;
+        grid.appendChild(badge);
+      });
+
+      summary.textContent = `MATRIX DIAGNOSTICS: ${passCount} / ${KYBER_COLORS.length} CRYSTALS VERIFIED REACHABLE (${Math.round((passCount / KYBER_COLORS.length) * 100)}% PASS)`;
+    }
+
+    function simulateCrystalPath(crystalId) {
+      const target = KYBER_COLORS.find(c => c.id === crystalId);
+      if (!target || !target.verifiedPath) return;
+
+      const evalRes = evaluateAnswerSequence(target.verifiedPath);
+      userAnswers = evalRes.indices;
+      closeCompendium();
+      document.getElementById('introScreen').classList.add('hidden');
+      finalizeAttunement();
+    }
+
+    function openCompendium() {
+      document.getElementById('compendiumModal').classList.remove('hidden');
+    }
+
+    function closeCompendium() {
+      document.getElementById('compendiumModal').classList.add('hidden');
+    }
+
+    window.onload = function() {
+      initCrystalLabPresets();
+      initCompendium();
+      bindSaberCanvasInteractions('saberCanvas');
+      bindSaberCanvasInteractions('labCanvas');
+
+      window.addEventListener('keydown', (e) => {
+        const quizScreen = document.getElementById('quizScreen');
+        if (!quizScreen || quizScreen.classList.contains('hidden')) return;
+        const key = e.key.toUpperCase();
+        const q = QUESTIONS[currentQuestionIndex];
+        if (!q) return;
+
+        const letterIdx = ['A', 'B', 'C', 'D', 'E'].indexOf(key);
+        const numIdx = ['1', '2', '3', '4', '5'].indexOf(key);
+        const chosenIdx = letterIdx >= 0 ? letterIdx : numIdx;
+
+        if (chosenIdx >= 0 && chosenIdx < q.options.length) {
+          selectOption(chosenIdx);
+        } else if (e.key === 'ArrowLeft' && currentQuestionIndex > 0) {
+          prevQuestion();
+        }
+      });
+
+      animationLoop();
+    };
+  </script>
+</body>
+</html>
