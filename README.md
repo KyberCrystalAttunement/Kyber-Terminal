@@ -2,7 +2,7 @@
 
 An interactive, in-universe Star Wars personality matrix, lore compendium, and dynamic crystal customization lab.
 
- **Try the Live Project:** [kybercrystalattunement.github.io/Kyber-Terminal/](https://github.io)
+ **Try the Live Project:** https://kybercrystalattunement.github.io/Kyber-Terminal/
 
 ---
 
