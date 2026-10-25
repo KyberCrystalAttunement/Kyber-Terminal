@@ -1,12 +1,12 @@
-# 🌌 Kyber Crystal Attunement Terminal v5.1
+#  Kyber Crystal Attunement Terminal v5.1
 
 An interactive, in-universe Star Wars personality matrix, lore compendium, and dynamic crystal customization lab.
 
-👉 **Try the Live Project:** [kybercrystalattunement.github.io/Kyber-Terminal/](https://github.io)
+ **Try the Live Project:** [kybercrystalattunement.github.io/Kyber-Terminal/](https://github.io)
 
 ---
 
-## 🛑 Disclaimer & Project Background
+##  Disclaimer & Project Background
 
 * **Free Fan Project:** This is a purely non-commercial, passion-driven fan project created by a fan, for fans. All rights to *Star Wars*, Kyber crystals, related terminology, and lore belong exclusively to Lucasfilm Ltd. & Disney.
 * **Creative Concept & Ownership:** The entire creative concept, visual UI design, formulation of the 15 psychological axioms (questions), lore descriptions, and the philosophical axis definitions were entirely envisioned and written by me.
@@ -14,11 +14,11 @@ An interactive, in-universe Star Wars personality matrix, lore compendium, and d
   Though it is my deepest wish, to do the work bei human hand. I am more of a visual artist and conceptual designer.
 ---
 
-## 🚀 Features & Core Components
+##  Features & Core Components
 
 Designed as an immersive, single-page web application, the terminal features three main interconnected modules:
 
-### 1. 🧭 Kyber Attunement (The Quiz)
+### 1.  Kyber Attunement (The Quiz)
 * **15 Archival Axioms:** A deep personality-mapping matrix that replaces predictable, cliché internet quiz questions.
 * **5-Axis Philosophy Matrix:** Every choice dynamically plots your coordinates across five fundamental behavioral dimensions:
   * *Reason (Logic vs. Passion)*
@@ -28,21 +28,21 @@ Designed as an immersive, single-page web application, the terminal features thr
   * *Autonomy (Sovereign Will)*
 * **Euclidean Resonance Engine:** The system mathematically calculates the distance between your profile and the ideal benchmarks of the **15 Extended Spectrum Crystals** to reveal your primary harmonic match (e.g., *Guardian Blue*) and a secondary hybrid overtone.
 
-### 2. 📚 Holocron Compendium (The Archives)
+### 2.  Holocron Compendium (The Archives)
 * An interactive encyclopedia covering all 15 unique crystal colors.
 * In-depth insights into the lore, user philosophies, and intrinsic combat form affinities (e.g., Form V: Djem So).
 
-### 3. 🧪 Crystal Lab & Forge (The Configurator)
+### 3.  Crystal Lab & Forge (The Configurator)
 * **Manual Plasma Diagnostics:** Fine-tune your blade using sliders for Primary Hue (degrees), Saturation, Lightness/Glow, Blade Core Width, and Plasma Instability/Crackle.
 * **Exotic Crystal Presets:** Includes advanced configurations for ultra-rare frequencies like the *Darksaber (Obsidian Core)* or *Void Core Polarity*.
 * **Haptics & Interaction:** The simulated plasma blade responds to your mouse movements ("Hover to Swing") and clicks ("Click Blade to Clash") with visual dynamic shifts.
 
-### 4. 🛠️ Matrix Diagnostics (The Balancing Tool)
+### 4.  Matrix Diagnostics (The Balancing Tool)
 * An integrated, active background algorithm that simulates and verifies if all 15 crystal paths are mathematically balanced and 100% reachable.
 
 ---
 
-## 🤝 Code Upgrades & Collaboration (Be My Guest!)
+##  Code Upgrades & Collaboration (Be My Guest!)
 
 The AI did a fantastic job bridging the gap and making this vision playable. However, automated code generation inevitably hits a ceiling when it comes to long-term performance optimization, clean folder structures, and advanced features.
 
@@ -56,4 +56,4 @@ Exciting next steps and upgrade ideas include:
 
 If you want to contribute, feel free to open a GitHub Issue, submit a Pull Request, or reach out to me directly!
 
-May the Force be with you. ✨
+May the Force be with you. 
