@@ -50,7 +50,7 @@ The AI did a fantastic job bridging the gap and making this vision playable. How
 I am actively looking for human developers who want to team up and take this terminal to the next level!
 
 Exciting next steps and upgrade ideas include:
-* Refactoring and modularizing the single-file code into clean, dedicated JS/CSS files or a modern framework.
+* Refactoring and modularizing the single-file code into clean, dedicated JS/CSS files or a modern framework. Like an android/ios app or .exe for desktop pcs.
 * Full audio integration (immersive sound effects for blade ignition, retraction, ambient hums, swings, and clashes).
 * Advanced UI animations and particle effects for the plasma forge.
 
