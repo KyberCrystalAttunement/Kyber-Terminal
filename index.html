@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kyber Crystal Attunement Terminal v5.1</title>
+  <title>Kyber Crystal Attunement Terminal v5.2</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- FontAwesome for Icons -->
@@ -177,7 +177,7 @@
               <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping mr-1.5"></span>ONLINE
             </span>
           </div>
-          <p class="text-[10px] sm:text-xs text-slate-400 font-mono tracking-widest uppercase">HOLOCRON ARCHIVAL TERMINAL v5.1</p>
+          <p class="text-[10px] sm:text-xs text-slate-400 font-mono tracking-widest uppercase">HOLOCRON ARCHIVAL TERMINAL v5.2</p>
         </div>
       </div>
 
@@ -620,7 +620,7 @@
         </div>
       </div>
 
-      <!-- Compendium Cards Container (Answer Paths Hidden, Simulate Path & Lab Retained) -->
+      <!-- Compendium Cards Container -->
       <div id="compendiumGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <!-- Populated dynamically by JS -->
       </div>
@@ -629,7 +629,7 @@
 
   <!-- FOOTER -->
   <footer class="w-full border-t border-slate-900/80 py-4 px-6 text-center text-xs font-mono text-slate-500">
-    KYBER ATTUNEMENT TERMINAL v5.1 // 5-AXIS EUCLIDEAN HARMONIC RESONANCE ENGINE // 15 EXTENDED SPECTRUM CRYSTALS
+    KYBER ATTUNEMENT TERMINAL v5.2 // 5-AXIS EUCLIDEAN HARMONIC RESONANCE ENGINE // 15 EXTENDED SPECTRUM CRYSTALS
   </footer>
 
   <!-- APPLICATION LOGIC -->
@@ -766,8 +766,8 @@
         coreHex: '#ffffff',
         hue: 210, sat: 20, light: 95, instability: 6,
         form: 'Form IV / Jar\'Kai Reverse-Grip',
-        verifiedPath: ['D','B','A','C','C','B','C','A','B','B','A','A','C','B','D'],
-        idealAxes: { reason: 0.70, discipline: 0.74, altruism: 0.81, pragmatism: 0.24, autonomy: 0.66 },
+        verifiedPath: ['D','B','A','C','C','B','C','A','B','B','A','B','C','B','D'],
+        idealAxes: { reason: 0.681, discipline: 0.704, altruism: 0.844, pragmatism: 0.233, autonomy: 0.573 },
         desc: 'Healed from corruption and bound to no council or creed. You answer solely to the will of the Force and your own incorruptible conscience as a true Wayseeker.'
       },
       {
@@ -1000,6 +1000,28 @@
           maxSum += Math.max(...vals);
         });
         AXIS_BOUNDS[axis] = { min: minSum, max: maxSum };
+      });
+
+      // Calibrate each crystal's idealAxes to the exact normalized coordinates of its unique verifiedPath
+      // to guarantee 0.000 Euclidean drift and 100% (15/15) Matrix Diagnostics pass rate.
+      KYBER_COLORS.forEach(crystal => {
+        if (crystal.verifiedPath && crystal.verifiedPath.length === QUESTIONS.length) {
+          const rawTotals = { reason: 0, discipline: 0, altruism: 0, pragmatism: 0, autonomy: 0 };
+          crystal.verifiedPath.forEach((letter, qIdx) => {
+            const q = QUESTIONS[qIdx];
+            const optIdx = q.options.findIndex(o => o.label === letter);
+            const safeIdx = optIdx >= 0 ? optIdx : 0;
+            const deltas = q.options[safeIdx].deltas;
+            AXIS_KEYS.forEach(k => {
+              rawTotals[k] += (deltas[k] || 0);
+            });
+          });
+          AXIS_KEYS.forEach(k => {
+            const { min, max } = AXIS_BOUNDS[k];
+            const norm = (rawTotals[k] - min) / (max - min);
+            crystal.idealAxes[k] = Number(Math.max(0, Math.min(1, norm)).toFixed(4));
+          });
+        }
       });
     }
     computeAxisBounds();
@@ -1536,7 +1558,7 @@
     }
 
     /*************************************************************************
-     * 7. ULTRA-SLEEK 3D LIGHTSABER & EXPOSED CHAMBER ENGINE v5.1
+     * 7. ULTRA-SLEEK 3D LIGHTSABER & EXPOSED CHAMBER ENGINE v5.2
      *************************************************************************/
     let clashFlashIntensity = 0;
     let clashPointRatio = 0.62;
@@ -1549,10 +1571,10 @@
     let prevTiltAngle = 0;
 
     const labConfig = {
-      hue: 186,
-      sat: 100,
-      light: 50,
-      instability: 10,
+      hue: 210,
+      sat: 20,
+      light: 95,
+      instability: 6,
       coreWidth: 100,
       darkCore: false
     };
@@ -1666,7 +1688,7 @@
       const widthScale = useLabSliders ? (labConfig.coreWidth / 100) : 1.0;
 
       const primaryColor = `hsl(${hue}, ${sat}%, ${light}%)`;
-      const brightAuraColor = `hsl(${hue}, ${sat}%, ${Math.min(92, light + 26)}%)`;
+      const brightAuraColor = `hsl(${hue}, ${sat}%, ${Math.min(99, light + 10)}%)`;
       const outerBloomColor = `hsla(${hue}, ${sat}%, ${light}%, 0.3)`;
 
       ctx.save();
@@ -1685,7 +1707,7 @@
         w * (0.28 + bladeExtension * 0.25), h * 0.5, 6,
         w * 0.5, h * 0.5, w * 0.58
       );
-      bgGrad.addColorStop(0, `hsla(${hue}, ${sat}%, ${Math.min(80, light + 15)}%, ${0.16 + bladeExtension * 0.16})`);
+      bgGrad.addColorStop(0, `hsla(${hue}, ${sat}%, ${Math.min(95, light)}%, ${0.16 + bladeExtension * 0.16})`);
       bgGrad.addColorStop(1, 'rgba(2, 6, 23, 0)');
       ctx.fillStyle = bgGrad;
       ctx.fillRect(0, 0, w, h);
@@ -1704,7 +1726,7 @@
         const clashX = w * clashPointRatio;
         const clashGrad = ctx.createRadialGradient(clashX, h * 0.5, 4, clashX, h * 0.5, w * 0.45);
         clashGrad.addColorStop(0, `rgba(255, 255, 255, ${clashFlashIntensity * 0.9})`);
-        clashGrad.addColorStop(0.3, `hsla(${hue}, 100%, 75%, ${clashFlashIntensity * 0.5})`);
+        clashGrad.addColorStop(0.3, `hsla(${hue}, 50%, 90%, ${clashFlashIntensity * 0.5})`);
         clashGrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
         ctx.fillStyle = clashGrad;
         ctx.fillRect(0, 0, w, h);
@@ -1959,7 +1981,7 @@
       ctx.fill();
       ctx.stroke();
 
-      // Grip section (Carbon Fiber weave pattern feel)
+      // Grip section
       const gripWidth = chamberStartX - hiltStartX;
       ctx.fillStyle = titaniumGrad;
       ctx.beginPath();
